@@ -1,6 +1,6 @@
-package com.pgiletich.graphics.ui;
+package com.pgiletich.graphics.ui.instrument;
 
-import com.pgiletich.graphics.graphics.GraphicsScene;
+import com.pgiletich.graphics.scene.GraphicsScene;
 
 public abstract class PaintingInstrument extends InstrumentStrategy {
     final GraphicsScene scene;

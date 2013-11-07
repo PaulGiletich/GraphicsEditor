@@ -1,7 +1,7 @@
-package com.pgiletich.graphics.graphics.object;
+package com.pgiletich.graphics.scene.object;
 
-import com.pgiletich.graphics.graphics.GraphicsScene;
 import com.pgiletich.graphics.model.GeometricShape;
+import com.pgiletich.graphics.scene.GraphicsScene;
 
 public abstract class GraphicsObject {
     private final GeometricShape shape;

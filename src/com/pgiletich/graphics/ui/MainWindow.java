@@ -1,6 +1,7 @@
 package com.pgiletich.graphics.ui;
 
-import com.pgiletich.graphics.graphics.GraphicsScene;
+import com.pgiletich.graphics.scene.GraphicsScene;
+import com.pgiletich.graphics.ui.instrument.*;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -15,6 +16,8 @@ public class MainWindow extends JFrame {
         initMenu();
         initActionListeners();
 
+        selectedInstrument = new HandInstrument(scrollPane);
+        scrollPane.setWheelScrollingEnabled(false);
         this.add(scrollPane);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
@@ -22,8 +25,22 @@ public class MainWindow extends JFrame {
     private void initMenu() {
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(initLineMenu());
+        menuBar.add(initToolsMenu());
         this.setJMenuBar(menuBar);
-        selectedInstrument = new AntialiasedLineInstrument(scene);
+    }
+
+    private JMenu initToolsMenu() {
+        JMenu toolsMenu = new JMenu("Tools");
+
+        JMenuItem handItem = new JMenuItem("Hand");
+        handItem.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedInstrument = new HandInstrument(scrollPane);
+            }
+        });
+        toolsMenu.add(handItem);
+        return toolsMenu;
     }
 
     private JMenu initLineMenu(){
@@ -66,47 +83,21 @@ public class MainWindow extends JFrame {
         scene.addMouseWheelListener(new ResizeListener());
     }
 
-    class InstrumentListener implements MouseListener, MouseMotionListener {
-
-        private MouseEvent convertToSceneCoords(MouseEvent e){
-            return new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(),
-                    e.getX() / scene.getScale(), e.getY() / scene.getScale(),
-                    e.getClickCount(), e.isPopupTrigger());
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            //do nothing
-        }
+    class InstrumentListener extends MouseAdapter {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            selectedInstrument.mousePressed(convertToSceneCoords(e));
+            selectedInstrument.mousePressed(e);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            selectedInstrument.mouseReleased(convertToSceneCoords(e));
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            //do nothing
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            //do nothing
+            selectedInstrument.mouseReleased(e);
         }
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            selectedInstrument.mouseDragged(convertToSceneCoords(e));
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-
+            selectedInstrument.mouseDragged(e);
         }
     }
 

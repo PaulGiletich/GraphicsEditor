@@ -1,9 +1,10 @@
-package com.pgiletich.graphics.ui;
+package com.pgiletich.graphics.ui.instrument;
 
-import com.pgiletich.graphics.graphics.GraphicsScene;
-import com.pgiletich.graphics.graphics.object.AntialiasedLine;
 import com.pgiletich.graphics.model.Line;
+import com.pgiletich.graphics.scene.GraphicsScene;
+import com.pgiletich.graphics.scene.object.AntialiasedLine;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class AntialiasedLineInstrument extends PaintingInstrument {
@@ -14,14 +15,16 @@ public class AntialiasedLineInstrument extends PaintingInstrument {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        line = new AntialiasedLine(new Line(e.getX(), e.getY(), e.getX(), e.getY()));
+        Point p = scene.toSceneCoords(e.getPoint());
+        line = new AntialiasedLine(new Line(p.x, p.y, p.x, p.y));
         getScene().addObject(line);
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        line.getShape().end.x = e.getX();
-        line.getShape().end.y = e.getY();
+        Point p = scene.toSceneCoords(e.getPoint());
+        line.getShape().end.x = p.x;
+        line.getShape().end.y = p.y;
         getScene().repaint();
     }
 }

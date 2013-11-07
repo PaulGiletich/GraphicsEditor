@@ -1,4 +1,4 @@
-package com.pgiletich.graphics.ui;
+package com.pgiletich.graphics.ui.instrument;
 
 import java.awt.event.MouseAdapter;
 

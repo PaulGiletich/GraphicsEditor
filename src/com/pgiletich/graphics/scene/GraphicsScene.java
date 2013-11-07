@@ -1,6 +1,6 @@
-package com.pgiletich.graphics.graphics;
+package com.pgiletich.graphics.scene;
 
-import com.pgiletich.graphics.graphics.object.GraphicsObject;
+import com.pgiletich.graphics.scene.object.GraphicsObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,7 +42,8 @@ public class GraphicsScene extends JPanel {
         if(scale == 1){
             return;
         }
-        g.setColor(Color.lightGray);
+        int gray = 255 - (scale * 5);
+        g.setColor(new Color(gray, gray, gray));
         for(int i=0; i < Math.min(canvasSize.width*scale, getWidth()); i+=scale){
             g.drawLine(i, 0, i, getHeight());
         }
@@ -80,5 +81,10 @@ public class GraphicsScene extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(canvasSize.width * scale, canvasSize.height * scale);
+    }
+
+    public Point toSceneCoords(Point p){
+        p.setLocation(p.x / scale, p.y / scale);
+        return p;
     }
 }
