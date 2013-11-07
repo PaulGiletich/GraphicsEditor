@@ -12,15 +12,26 @@ public class BresenhamLine extends AbstractLine {
     @Override
     public void paint(GraphicsScene scene) {
         Line line = getShape();
-        int dX = Math.abs(line.start.x - line.end.x);
-        int dY = Math.abs(line.start.y - line.end.y);
-        int stepX = line.start.x > line.end.x ? -1 : 1;
-        int stepY = line.start.y > line.end.y ? -1 : 1;
+
+        int x0 = line.start.x;
+        int x1 = line.end.x;
+        int y0 = line.start.y;
+        int y1 = line.end.y;
+
+        int dX = Math.abs(x0 - x1);
+        int dY = Math.abs(y0 - y1);
+
+        if(dX == 0 && dY == 0){
+            return;
+        }
+
+        int stepX = x0 > x1 ? -1 : 1;
+        int stepY = y0 > y1 ? -1 : 1;
 
         int error = dX - dY;
-        int x = line.start.x;
-        int y = line.start.y;
-        while(x != line.end.x + stepX && y != line.end.y + stepY){
+        int x = x0;
+        int y = y0;
+        while(x != x1 + stepX && y != y1 + stepY){
             scene.fillPixel(x, y);
             if(error*2 > -dY){
                 error -= dY;

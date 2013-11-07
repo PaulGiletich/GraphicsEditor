@@ -6,15 +6,10 @@ import com.pgiletich.graphics.model.Line;
 
 import java.awt.event.MouseEvent;
 
-public class CDALineInstrument extends InstrumentStrategy {
+public class CDALineInstrument extends PaintingInstrument {
     private CDALine line;
     public CDALineInstrument(GraphicsScene scene) {
         super(scene);
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -25,29 +20,9 @@ public class CDALineInstrument extends InstrumentStrategy {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
     public void mouseDragged(MouseEvent e) {
         line.getShape().end.x = e.getX();
         line.getShape().end.y = e.getY();
         getScene().repaint();
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

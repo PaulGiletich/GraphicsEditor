@@ -52,6 +52,7 @@ public class GraphicsScene extends JPanel {
     }
 
     public void fillPixel(int x, int y){
+        tmpGraphics.setColor(Color.BLACK);
         tmpGraphics.fillRect(x * scale, y * scale, scale, scale);
     }
 

@@ -6,7 +6,7 @@ import com.pgiletich.graphics.model.Line;
 
 import java.awt.event.MouseEvent;
 
-public class BresenhamLineInstrument extends InstrumentStrategy {
+public class BresenhamLineInstrument extends PaintingInstrument {
     private BresenhamLine line;
 
     public BresenhamLineInstrument(GraphicsScene scene) {
@@ -14,30 +14,9 @@ public class BresenhamLineInstrument extends InstrumentStrategy {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
     public void mousePressed(MouseEvent e) {
         line = new BresenhamLine(new Line(e.getX(), e.getY(), e.getX(), e.getY()));
         getScene().addObject(line);
-        //getScene().repaint();
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -45,10 +24,5 @@ public class BresenhamLineInstrument extends InstrumentStrategy {
         line.getShape().end.x = e.getX();
         line.getShape().end.y = e.getY();
         getScene().repaint();
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

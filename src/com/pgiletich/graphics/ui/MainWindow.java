@@ -8,13 +8,13 @@ import java.awt.event.*;
 public class MainWindow extends JFrame {
     private InstrumentStrategy selectedInstrument;
     private GraphicsScene scene = new GraphicsScene();
+    private JScrollPane scrollPane = new JScrollPane(scene);
 
     public MainWindow(){
         setSize(500, 400);
         initMenu();
         initActionListeners();
 
-        JScrollPane scrollPane = new JScrollPane(scene);
         this.add(scrollPane);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
