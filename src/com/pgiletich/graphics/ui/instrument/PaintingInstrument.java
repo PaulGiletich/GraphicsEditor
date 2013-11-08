@@ -2,14 +2,12 @@ package com.pgiletich.graphics.ui.instrument;
 
 import com.pgiletich.graphics.scene.GraphicsScene;
 
+import java.awt.*;
+
+
 public abstract class PaintingInstrument extends InstrumentStrategy {
-    final GraphicsScene scene;
-
     public PaintingInstrument(GraphicsScene scene) {
-        this.scene = scene;
-    }
-
-    public GraphicsScene getScene() {
-        return scene;
+        super(scene);
+        scene.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 }

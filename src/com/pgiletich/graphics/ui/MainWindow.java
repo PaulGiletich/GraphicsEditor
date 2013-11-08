@@ -4,6 +4,7 @@ import com.pgiletich.graphics.scene.GraphicsScene;
 import com.pgiletich.graphics.ui.instrument.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class MainWindow extends JFrame {
@@ -16,10 +17,24 @@ public class MainWindow extends JFrame {
         initMenu();
         initActionListeners();
 
-        selectedInstrument = new HandInstrument(scrollPane);
+        selectedInstrument = new HandInstrument(scene, scrollPane);
         scrollPane.setWheelScrollingEnabled(false);
-        this.add(scrollPane);
+        this.setLayout(new BorderLayout());
+        this.add(scrollPane, BorderLayout.CENTER);
+
+
+        this.add(initDebugPanel(), BorderLayout.SOUTH);
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    private JPanel initDebugPanel(){
+        JPanel debugPanel = new JPanel();
+        JCheckBox debugEnabled = new JCheckBox("debug");
+        JButton step = new JButton("step");
+        debugPanel.add(debugEnabled);
+        debugPanel.add(step);
+        return debugPanel;
     }
 
     private void initMenu() {
@@ -36,7 +51,7 @@ public class MainWindow extends JFrame {
         handItem.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectedInstrument = new HandInstrument(scrollPane);
+                selectedInstrument = new HandInstrument(scene, scrollPane);
             }
         });
         toolsMenu.add(handItem);

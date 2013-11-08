@@ -16,14 +16,14 @@ public class BresenhamLineInstrument extends PaintingInstrument {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        Point p = scene.toSceneCoords(e.getPoint());
+        Point p = getScene().toSceneCoords(e.getPoint());
         line = new BresenhamLine(new Line(p.x, p.y, p.x, p.y));
         getScene().addObject(line);
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        Point p = scene.toSceneCoords(e.getPoint());
+        Point p = getScene().toSceneCoords(e.getPoint());
         line.getShape().end.x = p.x;
         line.getShape().end.y = p.y;
         getScene().repaint();
