@@ -12,6 +12,7 @@ public class GraphicsScene extends JPanel {
     private List<GraphicsObject> objects = new ArrayList<>();
     private Graphics tmpGraphics;
     private Dimension canvasSize = new Dimension(500, 400);
+    private float fillAlphaMultiplier;
 
     public GraphicsScene() {
     }
@@ -25,9 +26,9 @@ public class GraphicsScene extends JPanel {
     }
 
     private void paintObjects(Graphics g) {
-        g.setColor(Color.BLACK);
         tmpGraphics = g;
         for(GraphicsObject object: objects){
+            g.setColor(Color.BLACK);
             object.paint(this);
         }
         tmpGraphics = null;
@@ -53,16 +54,19 @@ public class GraphicsScene extends JPanel {
     }
 
     public void fillPixel(int x, int y){
-        tmpGraphics.setColor(Color.BLACK);
         tmpGraphics.fillRect(x * scale, y * scale, scale, scale);
     }
 
     public void fillPixel(int x, int y, float alpha){
+        setFillAlpha(alpha);
+        tmpGraphics.fillRect(x * scale, y * scale, scale, scale);
+    }
+
+    public void setFillAlpha(float alpha){
         if(alpha > 1) {
             alpha = 1;
         }
-        tmpGraphics.setColor(new Color(0,0,0, (int)(alpha*255)));
-        tmpGraphics.fillRect(x * scale, y * scale, scale, scale);
+        tmpGraphics.setColor(new Color(0, 0, 0, (int) (alpha * 255)));
     }
 
     public int getScale() {

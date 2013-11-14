@@ -1,5 +1,6 @@
 package com.pgiletich.graphics.ui;
 
+import com.pgiletich.graphics.Debugger;
 import com.pgiletich.graphics.scene.GraphicsScene;
 import com.pgiletich.graphics.ui.instrument.*;
 
@@ -13,7 +14,7 @@ public class MainWindow extends JFrame {
     private JScrollPane scrollPane = new JScrollPane(scene);
 
     public MainWindow(){
-        setSize(500, 400);
+        setSize(800, 600);
         initMenu();
         initActionListeners();
 
@@ -31,7 +32,21 @@ public class MainWindow extends JFrame {
     private JPanel initDebugPanel(){
         JPanel debugPanel = new JPanel();
         JCheckBox debugEnabled = new JCheckBox("debug");
+        debugEnabled.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                Debugger.setEnabled(e.getStateChange() == ItemEvent.SELECTED);
+                scene.repaint();
+            }
+        });
         JButton step = new JButton("step");
+        step.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Debugger.addStep();
+                scene.repaint();
+            }
+        });
         debugPanel.add(debugEnabled);
         debugPanel.add(step);
         return debugPanel;
@@ -41,7 +56,22 @@ public class MainWindow extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(initLineMenu());
         menuBar.add(initToolsMenu());
+        menuBar.add(initHelpMenu());
         this.setJMenuBar(menuBar);
+    }
+
+    private JMenu initHelpMenu() {
+        JMenu helpMenu = new JMenu("Help");
+        JMenuItem aboutItem = new JMenuItem("About");
+        aboutItem.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame aboutWindow = new AboutWindow();
+                aboutWindow.setVisible(true);
+            }
+        });
+        helpMenu.add(aboutItem);
+        return helpMenu;
     }
 
     private JMenu initToolsMenu() {

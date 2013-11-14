@@ -1,5 +1,6 @@
 package com.pgiletich.graphics.scene.object;
 
+import com.pgiletich.graphics.Debugger;
 import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.scene.GraphicsScene;
 
@@ -10,6 +11,8 @@ public class AntialiasedLine extends AbstractLine {
 
     @Override
     public void paint(GraphicsScene scene) {
+        Debugger debugger = Debugger.getDebugger();
+
         Line line = getShape();
         int x0 = line.end.x;
         int y0 = line.end.y;
@@ -41,16 +44,29 @@ public class AntialiasedLine extends AbstractLine {
         float gradient = (float)dy / dx;
         float y = y0;
         for(int x = x0; x < x1; x++, y += gradient){
-            if(steep){
-                scene.fillPixel((int)y, x, reverseFloatPart(y));
-                scene.fillPixel((int)y+1, x, floatPart(y));
+            if(debugger.nextStep()){ // TODO refactor this shit
+                if(steep){
+                    scene.fillPixel((int)y, x, 0.1f*reverseFloatPart(y));
+                    scene.fillPixel((int)y+1, x, 0.1f*floatPart(y));
+                }
+                else{
+                    scene.fillPixel(x, (int)y, 0.1f*reverseFloatPart(y));
+                    scene.fillPixel(x, (int)y+1, 0.1f*floatPart(y));
+                }
             }
             else{
-                scene.fillPixel(x, (int)y, reverseFloatPart(y));
-                scene.fillPixel(x, (int)y+1, floatPart(y));
+                if(steep){
+                    scene.fillPixel((int)y, x, reverseFloatPart(y));
+                    scene.fillPixel((int)y+1, x, floatPart(y));
+                }
+                else{
+                    scene.fillPixel(x, (int)y, reverseFloatPart(y));
+                    scene.fillPixel(x, (int)y+1, floatPart(y));
+                }
             }
         }
     }
+
 
     private static float floatPart(float a){
         return a - (int)a;
