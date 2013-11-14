@@ -1,6 +1,6 @@
 package com.pgiletich.graphics.scene.object;
 
-import com.pgiletich.graphics.Debugger;
+import com.pgiletich.graphics.debugger.Debugger;
 import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.scene.GraphicsScene;
 
@@ -44,7 +44,7 @@ public class AntialiasedLine extends AbstractLine {
         float gradient = (float)dy / dx;
         float y = y0;
         for(int x = x0; x < x1; x++, y += gradient){
-            if(debugger.nextStep()){ // TODO refactor this shit
+            if(!debugger.hasNextStep()){ // TODO refactor this shit
                 if(steep){
                     scene.fillPixel((int)y, x, 0.1f*reverseFloatPart(y));
                     scene.fillPixel((int)y+1, x, 0.1f*floatPart(y));

@@ -1,6 +1,6 @@
 package com.pgiletich.graphics.scene.object;
 
-import com.pgiletich.graphics.Debugger;
+import com.pgiletich.graphics.debugger.Debugger;
 import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.scene.GraphicsScene;
 
@@ -29,7 +29,7 @@ public class CDALine extends AbstractLine {
         float y = line.start.y + sign(dy) * 0.5f;
 
         while(i++ < length){
-            if(debugger.nextStep()){
+            if(!debugger.hasNextStep()){
                 scene.setFillAlpha(0.1f);
             }
             scene.fillPixel((int) x, (int) y);  // filling pixel

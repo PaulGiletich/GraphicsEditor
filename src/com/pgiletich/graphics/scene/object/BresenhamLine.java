@@ -1,6 +1,6 @@
 package com.pgiletich.graphics.scene.object;
 
-import com.pgiletich.graphics.Debugger;
+import com.pgiletich.graphics.debugger.Debugger;
 import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.scene.GraphicsScene;
 
@@ -35,7 +35,7 @@ public class BresenhamLine extends AbstractLine {
         int x = x0;
         int y = y0;
         while(x != x1 + stepX && y != y1 + stepY){  // main painting cycle
-            if(debugger.nextStep()){
+            if(!debugger.hasNextStep()){
                 scene.setFillAlpha(0.1f);
             }
             scene.fillPixel(x, y);  //filling pixel

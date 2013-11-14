@@ -11,10 +11,10 @@ public class GraphicsScene extends JPanel {
     private int scale = 1;
     private List<GraphicsObject> objects = new ArrayList<>();
     private Graphics tmpGraphics;
-    private Dimension canvasSize = new Dimension(500, 400);
-    private float fillAlphaMultiplier;
+    private Dimension canvasSize;
 
-    public GraphicsScene() {
+    public GraphicsScene(Dimension canvasSize) {
+        this.canvasSize = canvasSize;
     }
 
     @Override
