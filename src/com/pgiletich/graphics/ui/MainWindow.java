@@ -2,7 +2,8 @@ package com.pgiletich.graphics.ui;
 
 import com.pgiletich.graphics.debugger.Debugger;
 import com.pgiletich.graphics.scene.GraphicsScene;
-import com.pgiletich.graphics.ui.instrument.*;
+import com.pgiletich.graphics.ui.instrument.InstrumentRepository;
+import com.pgiletich.graphics.ui.instrument.InstrumentStrategy;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,30 +17,29 @@ public class MainWindow extends JFrame {
     private JScrollPane scrollPane = new JScrollPane(scene){{
         setWheelScrollingEnabled(false);
     }};
+    private InstrumentRepository instrumentRepository = new InstrumentRepository(this);
     private Map<String, Action> actions = initActionsMap();
 
     public MainWindow(){
         setSize(800, 600);
+
         this.setJMenuBar(initMenuBar());
         this.setLayout(new BorderLayout());
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(initDebugPanel(), BorderLayout.SOUTH);
         this.add(initToolbar(), BorderLayout.WEST);
 
-        selectedInstrument = new HandInstrument(scene, scrollPane);
+        selectedInstrument = instrumentRepository.get("Hand");
         initActionListeners();
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     private JToolBar initToolbar() {
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
         toolBar.setOrientation(SwingConstants.VERTICAL);
-        toolBar.add(new JButton(actions.get("Hand")));
-        toolBar.addSeparator();
-        toolBar.add(new JButton(actions.get("CDA")));
-        toolBar.add(new JButton(actions.get("Bresenham")));
-        toolBar.add(new JButton(actions.get("Antialiased")));
+        for(String instrumentName: instrumentRepository.keySet()){
+            toolBar.add(new JButton(actions.get(instrumentName)));
+        }
         return toolBar;
     }
 
@@ -63,8 +63,6 @@ public class MainWindow extends JFrame {
 
     private JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        menuBar.add(initLineMenu());
-        menuBar.add(initToolsMenu());
         menuBar.add(initHelpMenu());
         return menuBar;
     }
@@ -76,20 +74,6 @@ public class MainWindow extends JFrame {
         return helpMenu;
     }
 
-    private JMenu initToolsMenu() {
-        JMenu toolsMenu = new JMenu("Tools");
-        toolsMenu.add(new JMenuItem(actions.get("Hand")));
-        return toolsMenu;
-    }
-
-    private JMenu initLineMenu(){
-        JMenu lineMenu = new JMenu("Line");
-        lineMenu.add(new JMenuItem(actions.get("CDA")));
-        lineMenu.add(new JMenuItem(actions.get("Bresenham")));
-        lineMenu.add(new JMenuItem(actions.get("Antialiased")));
-        return lineMenu;
-    }
-
     private void initActionListeners() {
         InstrumentListener listener = new InstrumentListener();
         scene.addMouseListener(listener);
@@ -99,30 +83,9 @@ public class MainWindow extends JFrame {
 
     private Map<String, Action> initActionsMap() {
         Map<String, Action> result = new HashMap<>();
-        result.put("Hand", new AbstractAction("Hand") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedInstrument = new HandInstrument(scene, scrollPane);
-            }
-        });
-        result.put("CDA", new AbstractAction("CDA") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedInstrument = new CDALineInstrument(scene);
-            }
-        });
-        result.put("Bresenham", new AbstractAction("Bresenham") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedInstrument = new BresenhamLineInstrument(scene);
-            }
-        });
-        result.put("Antialiased", new AbstractAction("Antialiased") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedInstrument = new AntialiasedLineInstrument(scene);
-            }
-        });
+        for(String instrumentName: instrumentRepository.keySet()) {
+            result.put(instrumentName, new InstrumentChangeAction(instrumentName));
+        }
         result.put("Step", new AbstractAction("Step") {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -138,6 +101,28 @@ public class MainWindow extends JFrame {
             }
         });
         return result;
+    }
+
+    public GraphicsScene getScene() {
+        return scene;
+    }
+
+    public JScrollPane getScrollPane() {
+        return scrollPane;
+    }
+
+    class InstrumentChangeAction extends AbstractAction{
+        private final String instrumentName;
+
+        public InstrumentChangeAction(String instrumentName){
+            super(instrumentName);
+            this.instrumentName = instrumentName;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            selectedInstrument = instrumentRepository.get(instrumentName);
+        }
     }
 
     class InstrumentListener extends MouseAdapter {

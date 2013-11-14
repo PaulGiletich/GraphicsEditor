@@ -1,8 +1,8 @@
 package com.pgiletich.graphics.ui.instrument;
 
 import com.pgiletich.graphics.model.Line;
-import com.pgiletich.graphics.scene.GraphicsScene;
 import com.pgiletich.graphics.scene.object.BresenhamLine;
+import com.pgiletich.graphics.ui.MainWindow;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -10,8 +10,8 @@ import java.awt.event.MouseEvent;
 public class BresenhamLineInstrument extends PaintingInstrument {
     private BresenhamLine line;
 
-    public BresenhamLineInstrument(GraphicsScene scene) {
-        super(scene);
+    public BresenhamLineInstrument(MainWindow window) {
+        super(window);
     }
 
     @Override

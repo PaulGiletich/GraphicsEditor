@@ -1,16 +1,16 @@
 package com.pgiletich.graphics.ui.instrument;
 
 import com.pgiletich.graphics.model.Line;
-import com.pgiletich.graphics.scene.GraphicsScene;
 import com.pgiletich.graphics.scene.object.CDALine;
+import com.pgiletich.graphics.ui.MainWindow;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class CDALineInstrument extends PaintingInstrument {
     private CDALine line;
-    public CDALineInstrument(GraphicsScene scene) {
-        super(scene);
+    public CDALineInstrument(MainWindow window) {
+        super(window);
     }
 
     @Override

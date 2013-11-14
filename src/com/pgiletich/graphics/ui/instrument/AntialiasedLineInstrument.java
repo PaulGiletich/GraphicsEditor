@@ -1,16 +1,16 @@
 package com.pgiletich.graphics.ui.instrument;
 
 import com.pgiletich.graphics.model.Line;
-import com.pgiletich.graphics.scene.GraphicsScene;
 import com.pgiletich.graphics.scene.object.AntialiasedLine;
+import com.pgiletich.graphics.ui.MainWindow;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class AntialiasedLineInstrument extends PaintingInstrument {
     private AntialiasedLine line;
-    public AntialiasedLineInstrument(GraphicsScene scene) {
-        super(scene);
+    public AntialiasedLineInstrument(MainWindow window) {
+        super(window);
     }
 
     @Override

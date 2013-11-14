@@ -1,6 +1,6 @@
 package com.pgiletich.graphics.ui.instrument;
 
-import com.pgiletich.graphics.scene.GraphicsScene;
+import com.pgiletich.graphics.ui.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,10 +10,9 @@ public class HandInstrument extends InstrumentStrategy {
     private final JScrollPane scrollPane;
     private Point lastMousePos;
 
-    public HandInstrument(GraphicsScene scene, JScrollPane scrollPane) {
-        super(scene);
-        this.scrollPane = scrollPane;
-        scene.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    public HandInstrument(MainWindow window) {
+        super(window);
+        this.scrollPane = window.getScrollPane();
     }
 
     @Override

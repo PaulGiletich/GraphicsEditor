@@ -1,17 +1,17 @@
 package com.pgiletich.graphics.ui.instrument;
 
-import com.pgiletich.graphics.scene.GraphicsScene;
+import com.pgiletich.graphics.ui.MainWindow;
 
 import java.awt.event.MouseAdapter;
 
 public abstract class InstrumentStrategy extends MouseAdapter {
-    private final GraphicsScene scene;
+    private final MainWindow window;
 
-    public InstrumentStrategy(GraphicsScene scene){
-        this.scene = scene;
+    public InstrumentStrategy(MainWindow window){
+        this.window = window;
     }
 
-    public GraphicsScene getScene() {
-        return scene;
+    public MainWindow getWindow() {
+        return window;
     }
 }
