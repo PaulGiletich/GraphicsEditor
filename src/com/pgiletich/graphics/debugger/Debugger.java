@@ -10,7 +10,7 @@ public class Debugger {
     }
 
     public static Debugger getDebugger() {
-            return new Debugger(steps);
+        return new Debugger(steps);
     }
 
     public boolean hasNextStep(){

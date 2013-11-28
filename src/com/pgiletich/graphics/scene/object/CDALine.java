@@ -37,9 +37,4 @@ public class CDALine extends AbstractLine {
             y+=dy;
         }
     }
-
-    @Override
-    public Line getShape() {
-        return (Line)super.getShape();
-    }
 }
