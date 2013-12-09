@@ -1,4 +1,4 @@
-package com.pgiletich.graphics.scene.object;
+package com.pgiletich.graphics.scene.object.line;
 
 import com.pgiletich.graphics.debugger.Debugger;
 import com.pgiletich.graphics.model.Line;

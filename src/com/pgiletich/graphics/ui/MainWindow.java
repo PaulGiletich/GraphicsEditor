@@ -1,24 +1,23 @@
 package com.pgiletich.graphics.ui;
 
-import com.pgiletich.graphics.debugger.Debugger;
 import com.pgiletich.graphics.scene.GraphicsScene;
-import com.pgiletich.graphics.ui.instrument.InstrumentRepository;
+import com.pgiletich.graphics.ui.instrument.HandInstrument;
 import com.pgiletich.graphics.ui.instrument.InstrumentStrategy;
+import com.pgiletich.graphics.ui.panels.CurvesPanel;
+import com.pgiletich.graphics.ui.panels.DebugPanel;
+import com.pgiletich.graphics.ui.panels.LinesPanel;
+import com.pgiletich.graphics.ui.panels.WindowInstrumentsPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainWindow extends JFrame {
-    private InstrumentStrategy selectedInstrument;
+    private InstrumentStrategy instrument;
     private GraphicsScene scene = new GraphicsScene(new Dimension(700, 500));
     private JScrollPane scrollPane = new JScrollPane(scene){{
         setWheelScrollingEnabled(false);
     }};
-    private InstrumentRepository instrumentRepository = new InstrumentRepository(this);
-    private Map<String, Action> actions = initActionsMap();
 
     public MainWindow(){
         setSize(800, 600);
@@ -26,10 +25,10 @@ public class MainWindow extends JFrame {
         this.setJMenuBar(initMenuBar());
         this.setLayout(new BorderLayout());
         this.add(scrollPane, BorderLayout.CENTER);
-        this.add(initDebugPanel(), BorderLayout.SOUTH);
+        this.add(new DebugPanel(this), BorderLayout.SOUTH);
         this.add(initToolbar(), BorderLayout.WEST);
 
-        selectedInstrument = instrumentRepository.get("Hand");
+        instrument = new HandInstrument(this);
         initActionListeners();
     }
 
@@ -37,41 +36,27 @@ public class MainWindow extends JFrame {
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
         toolBar.setOrientation(SwingConstants.VERTICAL);
-        for(String instrumentName: instrumentRepository.keySet()){
-            toolBar.add(new JButton(actions.get(instrumentName)));
-        }
-        return toolBar;
-    }
 
-    private JPanel initDebugPanel(){
-        JPanel debugPanel = new JPanel();
-        final JButton stepButton = new JButton(actions.get("Step"));
-        JCheckBox debugEnabled = new JCheckBox("debug");
-        debugEnabled.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                Debugger.setEnabled(e.getStateChange() == ItemEvent.SELECTED);
-                scene.repaint();
-                stepButton.setEnabled(e.getStateChange() == ItemEvent.SELECTED);
-            }
-        });
-        stepButton.setEnabled(false);
-        debugPanel.add(debugEnabled);
-        debugPanel.add(stepButton);
-        return debugPanel;
+        toolBar.add(new LinesPanel(this));
+        toolBar.add(new CurvesPanel(this));
+        toolBar.add(new WindowInstrumentsPanel(this));
+
+        return toolBar;
     }
 
     private JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        menuBar.add(initHelpMenu());
-        return menuBar;
-    }
-
-    private JMenu initHelpMenu() {
         JMenu helpMenu = new JMenu("Help");
-        JMenuItem aboutItem = new JMenuItem(actions.get("About"));
+        JMenuItem aboutItem = new JMenuItem(new AbstractAction("About") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame aboutWindow = new AboutWindow();
+                aboutWindow.setVisible(true);
+            }
+        });
         helpMenu.add(aboutItem);
-        return helpMenu;
+        menuBar.add(helpMenu);
+        return menuBar;
     }
 
     private void initActionListeners() {
@@ -79,28 +64,6 @@ public class MainWindow extends JFrame {
         scene.addMouseListener(listener);
         scene.addMouseMotionListener(listener);
         scene.addMouseWheelListener(new ResizeListener());
-    }
-
-    private Map<String, Action> initActionsMap() {
-        Map<String, Action> result = new HashMap<>();
-        for(String instrumentName: instrumentRepository.keySet()) {
-            result.put(instrumentName, new InstrumentChangeAction(instrumentName));
-        }
-        result.put("Step", new AbstractAction("Step") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Debugger.addStep();
-                scene.repaint();
-            }
-        });
-        result.put("About", new AbstractAction("About") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame aboutWindow = new AboutWindow();
-                aboutWindow.setVisible(true);
-            }
-        });
-        return result;
     }
 
     public GraphicsScene getScene() {
@@ -111,35 +74,21 @@ public class MainWindow extends JFrame {
         return scrollPane;
     }
 
-    class InstrumentChangeAction extends AbstractAction{
-        private final String instrumentName;
-
-        public InstrumentChangeAction(String instrumentName){
-            super(instrumentName);
-            this.instrumentName = instrumentName;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            selectedInstrument = instrumentRepository.get(instrumentName);
-        }
-    }
-
     class InstrumentListener extends MouseAdapter {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            selectedInstrument.mousePressed(e);
+            instrument.mousePressed(e);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            selectedInstrument.mouseReleased(e);
+            instrument.mouseReleased(e);
         }
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            selectedInstrument.mouseDragged(e);
+            instrument.mouseDragged(e);
         }
     }
 
@@ -151,5 +100,13 @@ public class MainWindow extends JFrame {
                 scene.setScale(1);
             }
         }
+    }
+
+    public InstrumentStrategy getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(InstrumentStrategy instrument) {
+        this.instrument = instrument;
     }
 }

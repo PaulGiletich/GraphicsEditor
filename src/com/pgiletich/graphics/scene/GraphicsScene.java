@@ -69,6 +69,10 @@ public class GraphicsScene extends JPanel {
         tmpGraphics.setColor(new Color(0, 0, 0, (int) (alpha * 255)));
     }
 
+    public void setColor(Color color){
+        tmpGraphics.setColor(color);
+    }
+
     public int getScale() {
         return scale;
     }
@@ -78,8 +82,9 @@ public class GraphicsScene extends JPanel {
         revalidate();
     }
 
-    public void addObject(GraphicsObject object) {
+    public GraphicsScene addObject(GraphicsObject object) {
         objects.add(object);
+        return this;
     }
 
     @Override
@@ -90,5 +95,15 @@ public class GraphicsScene extends JPanel {
     public Point toSceneCoords(Point p){
         p.setLocation(p.x / scale, p.y / scale);
         return p;
+    }
+
+    public GraphicsObject getObjectByPoint(Point p) {
+        com.pgiletich.graphics.model.Point point = new com.pgiletich.graphics.model.Point(p.x, p.y);
+        for (GraphicsObject object: objects){
+            if(object.contains(point)){
+                return object;
+            }
+        }
+        return null;
     }
 }
