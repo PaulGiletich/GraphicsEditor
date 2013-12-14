@@ -1,16 +1,23 @@
 package com.pgiletich.graphics.model;
 
 public class Point implements GeometricShape{
-    public int x;
-    public int y;
-    public int z;
-    public int i;
+    public double x;
+    public double y;
+    public double z;
+    public double i;
 
-    public Point(int x, int y) {
+    public Point(double x, double y) {
         this.x = x;
         this.y = y;
         this.z = 0;
         this.i = 0;
+    }
+
+    public Point(double x, double y, double z, double i) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.i = i;
     }
 
     @Override
@@ -28,12 +35,13 @@ public class Point implements GeometricShape{
         return true;
     }
 
+    //yeah, i can explain this
     @Override
     public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
-        result = 31 * result + z;
-        result = 31 * result + i;
+        int result = (int) x;
+        result = (int) (31 * result + y);
+        result = (int) (31 * result + z);
+        result = (int) (31 * result + i);
         return result;
     }
 }

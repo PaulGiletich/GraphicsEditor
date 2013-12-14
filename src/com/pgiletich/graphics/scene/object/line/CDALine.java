@@ -19,14 +19,14 @@ public class CDALine extends AbstractLine {
         Debugger debugger = Debugger.getDebugger();
 
         Line line = getShape();
-        int length = Math.max( // Getting maximum length
+        int length = (int) Math.max( // Getting maximum length
                 Math.abs(line.start.x - line.end.x),
                 Math.abs(line.start.y - line.end.y));
-        float dx = (line.end.x - line.start.x) / (float)length; // values, by which x and y change each step
-        float dy = (line.end.y - line.start.y) / (float)length;
+        float dx = (float) ((line.end.x - line.start.x) / (float)length); // values, by which x and y change each step
+        float dy = (float) ((line.end.y - line.start.y) / (float)length);
         int i = 0;
-        float x = line.start.x + sign(dx) * 0.5f;
-        float y = line.start.y + sign(dy) * 0.5f;
+        float x = (float) (line.start.x + sign(dx) * 0.5f);
+        float y = (float) (line.start.y + sign(dy) * 0.5f);
 
         while(i++ < length){
             if(!debugger.hasNextStep()){

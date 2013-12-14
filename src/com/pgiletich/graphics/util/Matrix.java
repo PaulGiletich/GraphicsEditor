@@ -5,7 +5,7 @@ public class Matrix {
 
     private final double[][] data;
 
-    public Matrix(double[]... data) {
+    public Matrix(double[][] data) {
         this.data = data;
     }
 

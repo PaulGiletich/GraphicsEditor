@@ -17,20 +17,20 @@ public class AntialiasedLine extends AbstractLine {
         Debugger debugger = Debugger.getDebugger();
 
         Line line = getShape();
-        int x0 = line.end.x;
-        int y0 = line.end.y;
-        int x1 = line.start.x;
-        int y1 = line.start.y;
+        int x0 = (int) line.end.x;
+        int y0 = (int) line.end.y;
+        int x1 = (int) line.start.x;
+        int y1 = (int) line.start.y;
 
         int dx = x1 - x0;
         int dy = y1 - y0;
 
         boolean steep = Math.abs(dy) > Math.abs(dx);
         if(steep){
-            x0 = line.start.y;
-            y0 = line.start.x;
-            x1 = line.end.y;
-            y1 = line.end.x;
+            x0 = (int) line.start.y;
+            y0 = (int) line.start.x;
+            x1 = (int) line.end.y;
+            y1 = (int) line.end.x;
         }
         if (x0 > x1){
             int tmp = x0;
@@ -47,7 +47,7 @@ public class AntialiasedLine extends AbstractLine {
         float gradient = (float)dy / dx;
         float y = y0;
         for(int x = x0; x < x1; x++, y += gradient){
-            if(!debugger.hasNextStep()){ // TODO refactor this shit
+            if(!debugger.hasNextStep()){
                 if(steep){
                     scene.fillPixel((int)y, x, 0.1f* reverseFloatPart(y));
                     scene.fillPixel((int)y+1, x, 0.1f* floatPart(y));

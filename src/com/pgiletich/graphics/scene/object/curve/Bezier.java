@@ -10,10 +10,12 @@ import java.util.List;
 public class Bezier extends AbstractCurve {
 
     private static final Matrix basicMatrix = new Matrix(
-            new double[]{-1, 3, -3, 1},
-            new double[]{3, -6, 3, 0},
-            new double[]{-3, 3, 0, 0},
-            new double[]{1, 0, 0, 0});
+            new double[][]{
+                    {-1, 3, -3, 1},
+                    {3, -6, 3, 0},
+                    {-3, 3, 0, 0},
+                    {1, 0, 0, 0}
+            });
 
     public Bezier(Curve shape) {
         super(shape);
@@ -26,17 +28,21 @@ public class Bezier extends AbstractCurve {
         double tStep = calculateTStep(points);
         
         Matrix xMatrix = new Matrix(
-                new double[]{points.get(0).x},
-                new double[]{points.get(1).x},
-                new double[]{points.get(2).x},
-                new double[]{points.get(3).x}
+                new double[][]{
+                        {points.get(0).x},
+                        {points.get(1).x},
+                        {points.get(2).x},
+                        {points.get(3).x}
+                }
         );
 
         Matrix yMatrix = new Matrix(
-                new double[]{points.get(0).y},
-                new double[]{points.get(1).y},
-                new double[]{points.get(2).y},
-                new double[]{points.get(3).y}
+                new double[][]{
+                        {points.get(0).y},
+                        {points.get(1).y},
+                        {points.get(2).y},
+                        {points.get(3).y}
+                }
         );
 
         for (double t = 0; t <= 1; t += tStep) {
@@ -54,16 +60,16 @@ public class Bezier extends AbstractCurve {
 
     private Matrix getTMatrix(double t) {
         return new Matrix(
-                new double[]{
+                new double[][]{{
                         Math.pow(t, 3),
                         Math.pow(t, 2),
                         t,
                         1
-                }
+                }}
         );
     }
 
     private double calculateTStep(List<Point> points){
-        return 0.001;//TODO
+        return 0.001;
     }
 }

@@ -10,10 +10,12 @@ import java.util.List;
 public class Ermit extends AbstractCurve {
 
     private static final Matrix basicMatrix = new Matrix(
-            new double[]{2, -2, 1, 1},
-            new double[]{-3, 3, -2, -1},
-            new double[]{0, 0, 1, 0},
-            new double[]{1, 0, 0, 0});
+            new double[][]{
+                    {2, -2, 1, 1},
+                    {-3, 3, -2, -1},
+                    {0, 0, 1, 0},
+                    {1, 0, 0, 0}
+            });
 
     public Ermit(Curve shape) {
         super(shape);
@@ -27,20 +29,22 @@ public class Ermit extends AbstractCurve {
 
         Point r1 = calculateRVector(points.get(0), points.get(1));
         Point r4 = calculateRVector(points.get(2), points.get(3));
-        
+
         Matrix xMatrix = new Matrix(
-                new double[]{points.get(0).x},
-                new double[]{points.get(3).x},
-                new double[]{r1.x},
-                new double[]{r4.x}
-        );
+                new double[][]{
+                        {points.get(0).x},
+                        {points.get(3).x},
+                        {r1.x},
+                        {r4.x}
+                });
 
         Matrix yMatrix = new Matrix(
-                new double[]{points.get(0).y},
-                new double[]{points.get(3).y},
-                new double[]{r1.y},
-                new double[]{r4.y}
-        );
+                new double[][]{
+                        {points.get(0).y},
+                        {points.get(3).y},
+                        {r1.y},
+                        {r4.y}
+                });
 
         for (double t = 0; t <= 1; t += tStep) {
             scene.fillPixel(
@@ -50,7 +54,7 @@ public class Ermit extends AbstractCurve {
     }
 
     private Point calculateRVector(Point p1, Point p2) {
-        return new Point(p2.x - p1.x, p2.y - p1.y);
+        return new Point((int) (p2.x - p1.x), (int) (p2.y - p1.y));
     }
 
     private double calculatePoint(double t, Matrix pointsMatrix) {
@@ -61,16 +65,16 @@ public class Ermit extends AbstractCurve {
 
     private Matrix getTMatrix(double t) {
         return new Matrix(
-                new double[]{
+                new double[][]{{
                         Math.pow(t, 3),
                         Math.pow(t, 2),
                         t,
                         1
-                }
+                }}
         );
     }
 
     private double calculateTStep(List<Point> points){
-        return 0.001;//TODO
+        return 0.001;
     }
 }
