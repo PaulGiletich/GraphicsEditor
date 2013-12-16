@@ -1,7 +1,7 @@
 package com.pgiletich.graphics.scene.object.curve;
 
-import com.pgiletich.graphics.model.Curve;
 import com.pgiletich.graphics.model.Point;
+import com.pgiletich.graphics.model.PointList;
 import com.pgiletich.graphics.scene.GraphicsScene;
 import com.pgiletich.graphics.util.Matrix;
 
@@ -17,13 +17,13 @@ public class Ermit extends AbstractCurve {
                     {1, 0, 0, 0}
             });
 
-    public Ermit(Curve shape) {
+    public Ermit(PointList shape) {
         super(shape);
     }
 
     @Override
     public void paint(GraphicsScene scene) {
-        List<Point> points = getShape().points;
+        List<Point> points = getShape().points();
 
         double tStep = calculateTStep(points);
 
@@ -32,18 +32,18 @@ public class Ermit extends AbstractCurve {
 
         Matrix xMatrix = new Matrix(
                 new double[][]{
-                        {points.get(0).x},
-                        {points.get(3).x},
-                        {r1.x},
-                        {r4.x}
+                        {points.get(0).getX()},
+                        {points.get(3).getX()},
+                        {r1.getX()},
+                        {r4.getX()}
                 });
 
         Matrix yMatrix = new Matrix(
                 new double[][]{
-                        {points.get(0).y},
-                        {points.get(3).y},
-                        {r1.y},
-                        {r4.y}
+                        {points.get(0).getY()},
+                        {points.get(3).getY()},
+                        {r1.getY()},
+                        {r4.getY()}
                 });
 
         for (double t = 0; t <= 1; t += tStep) {
@@ -54,7 +54,7 @@ public class Ermit extends AbstractCurve {
     }
 
     private Point calculateRVector(Point p1, Point p2) {
-        return new Point((int) (p2.x - p1.x), (int) (p2.y - p1.y));
+        return new Point((int) (p2.getX() - p1.getX()), (int) (p2.getY() - p1.getY()));
     }
 
     private double calculatePoint(double t, Matrix pointsMatrix) {

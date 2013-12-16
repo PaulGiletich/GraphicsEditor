@@ -4,6 +4,7 @@ import com.pgiletich.graphics.scene.GraphicsScene;
 import com.pgiletich.graphics.ui.instrument.CubeInstrument;
 import com.pgiletich.graphics.ui.instrument.HandInstrument;
 import com.pgiletich.graphics.ui.instrument.InstrumentStrategy;
+import com.pgiletich.graphics.ui.instrument.TriangulationInstrument;
 import com.pgiletich.graphics.ui.panels.CurvesPanel;
 import com.pgiletich.graphics.ui.panels.DebugPanel;
 import com.pgiletich.graphics.ui.panels.LinesPanel;
@@ -44,6 +45,12 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setInstrument(new CubeInstrument(MainWindow.this));
+            }
+        }));
+        toolBar.add(new JButton(new AbstractAction("Triangulation") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setInstrument(new TriangulationInstrument(MainWindow.this));
             }
         }));
         toolBar.add(new WindowInstrumentsPanel(this));

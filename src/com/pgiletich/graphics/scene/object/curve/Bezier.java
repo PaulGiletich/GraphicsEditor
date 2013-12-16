@@ -1,7 +1,7 @@
 package com.pgiletich.graphics.scene.object.curve;
 
-import com.pgiletich.graphics.model.Curve;
 import com.pgiletich.graphics.model.Point;
+import com.pgiletich.graphics.model.PointList;
 import com.pgiletich.graphics.scene.GraphicsScene;
 import com.pgiletich.graphics.util.Matrix;
 
@@ -17,31 +17,31 @@ public class Bezier extends AbstractCurve {
                     {1, 0, 0, 0}
             });
 
-    public Bezier(Curve shape) {
+    public Bezier(PointList shape) {
         super(shape);
     }
 
     @Override
     public void paint(GraphicsScene scene) {
-        List<Point> points = getShape().points;
+        List<Point> points = getShape().points();
 
         double tStep = calculateTStep(points);
         
         Matrix xMatrix = new Matrix(
                 new double[][]{
-                        {points.get(0).x},
-                        {points.get(1).x},
-                        {points.get(2).x},
-                        {points.get(3).x}
+                        {points.get(0).getX()},
+                        {points.get(1).getX()},
+                        {points.get(2).getX()},
+                        {points.get(3).getX()}
                 }
         );
 
         Matrix yMatrix = new Matrix(
                 new double[][]{
-                        {points.get(0).y},
-                        {points.get(1).y},
-                        {points.get(2).y},
-                        {points.get(3).y}
+                        {points.get(0).getY()},
+                        {points.get(1).getY()},
+                        {points.get(2).getY()},
+                        {points.get(3).getY()}
                 }
         );
 

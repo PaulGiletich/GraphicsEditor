@@ -1,7 +1,7 @@
 package com.pgiletich.graphics.scene.object.curve;
 
-import com.pgiletich.graphics.model.Curve;
 import com.pgiletich.graphics.model.Point;
+import com.pgiletich.graphics.model.PointList;
 import com.pgiletich.graphics.scene.GraphicsScene;
 import com.pgiletich.graphics.util.Matrix;
 
@@ -16,13 +16,13 @@ public class BSpline extends AbstractCurve {
                     {1, 4, 1, 0}
             });
 
-    public BSpline(Curve shape) {
+    public BSpline(PointList shape) {
         super(shape);
     }
 
     @Override
     public void paint(GraphicsScene scene) {
-        List<Point> points = getShape().points;
+        List<Point> points = getShape().points();
 
         if(points.size() < 4){
             return;
@@ -34,19 +34,19 @@ public class BSpline extends AbstractCurve {
 
             Matrix xMatrix = new Matrix(
                     new double[][]{
-                            {points.get(i+0).x},
-                            {points.get(i+1).x},
-                            {points.get(i+2).x},
-                            {points.get(i+3).x}
+                            {points.get(i+0).getX()},
+                            {points.get(i+1).getX()},
+                            {points.get(i+2).getX()},
+                            {points.get(i+3).getX()}
                     }
             );
 
             Matrix yMatrix = new Matrix(
                     new double[][]{
-                            {points.get(i+0).y},
-                            {points.get(i+1).y},
-                            {points.get(i+2).y},
-                            {points.get(i+3).y}
+                            {points.get(i+0).getY()},
+                            {points.get(i+1).getY()},
+                            {points.get(i+2).getY()},
+                            {points.get(i+3).getY()}
                     }
             );
 

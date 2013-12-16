@@ -24,8 +24,8 @@ public class MoveInstrument extends InstrumentStrategy {
     public void mouseDragged(MouseEvent e) {
         Point p = getScene().toSceneCoords(e.getPoint());
         if(movingObject != null){
-            ((com.pgiletich.graphics.model.Point)movingObject.getShape()).x = p.x;//TODO change this when making movable all the items
-            ((com.pgiletich.graphics.model.Point)movingObject.getShape()).y = p.y;
+            ((com.pgiletich.graphics.model.Point)movingObject.getShape()).setX(p.x);//TODO change this when making movable all the items
+            ((com.pgiletich.graphics.model.Point)movingObject.getShape()).setY(p.y);
         }
         getScene().repaint();
     }

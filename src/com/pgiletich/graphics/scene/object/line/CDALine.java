@@ -3,6 +3,7 @@ package com.pgiletich.graphics.scene.object.line;
 import com.pgiletich.graphics.debugger.Debugger;
 import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.scene.GraphicsScene;
+import com.pgiletich.graphics.util.MathUtil;
 
 public class CDALine extends AbstractLine {
 
@@ -10,31 +11,33 @@ public class CDALine extends AbstractLine {
         super(line);
     }
 
-    private int sign(float a){
-        return a >= 0 ? 1 : -1;
-    }
-
     @Override
     public void paint(GraphicsScene scene) {
-        Debugger debugger = Debugger.getDebugger();
+        Drawer.draw(scene, getShape());
+    }
 
-        Line line = getShape();
-        int length = (int) Math.max( // Getting maximum length
-                Math.abs(line.start.x - line.end.x),
-                Math.abs(line.start.y - line.end.y));
-        float dx = (float) ((line.end.x - line.start.x) / (float)length); // values, by which x and y change each step
-        float dy = (float) ((line.end.y - line.start.y) / (float)length);
-        int i = 0;
-        float x = (float) (line.start.x + sign(dx) * 0.5f);
-        float y = (float) (line.start.y + sign(dy) * 0.5f);
+    public static class Drawer{
 
-        while(i++ < length){
-            if(!debugger.hasNextStep()){
-                scene.setFillAlpha(0.1f);
+        public static void draw(GraphicsScene scene, Line line){
+            Debugger debugger = Debugger.getDebugger();
+
+            int length = (int) Math.max( // Getting maximum length
+                    Math.abs(line.start().getX() - line.end().getX()),
+                    Math.abs(line.start().getY() - line.end().getY()));
+            float dx = (float) ((line.end().getX() - line.start().getX()) / (float)length); // values, by which x and y change each step
+            float dy = (float) ((line.end().getY() - line.start().getY()) / (float)length);
+            int i = 0;
+            float x = (float) (line.start().getX() + MathUtil.sign(dx) * 0.5f);
+            float y = (float) (line.start().getY() + MathUtil.sign(dy) * 0.5f);
+
+            while(i++ < length){
+                if(!debugger.hasNextStep()){
+                    scene.setFillAlpha(0.1f);
+                }
+                scene.fillPixel((int) x, (int) y);  // filling pixel
+                x+=dx;
+                y+=dy;
             }
-            scene.fillPixel((int) x, (int) y);  // filling pixel
-            x+=dx;
-            y+=dy;
         }
     }
 }

@@ -1,14 +1,14 @@
 package com.pgiletich.graphics.ui.instrument.curve;
 
-import com.pgiletich.graphics.model.Curve;
 import com.pgiletich.graphics.model.Point;
+import com.pgiletich.graphics.model.PointList;
 import com.pgiletich.graphics.scene.object.GraphicsPoint;
 import com.pgiletich.graphics.scene.object.curve.Ermit;
 import com.pgiletich.graphics.ui.MainWindow;
 
 import java.awt.event.MouseEvent;
 
-public class ErmitCurveInstrument extends AbstractCurveInstrument {
+public class ErmitCurveInstrument extends PointListInstrument {
 
     public ErmitCurveInstrument(MainWindow window) {
         super(window);
@@ -16,20 +16,20 @@ public class ErmitCurveInstrument extends AbstractCurveInstrument {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(getCurve() == null){
-            setCurve(new Curve());
+        if(getPointList() == null){
+            setPointList(new PointList());
         }
         java.awt.Point p = getScene().toSceneCoords(e.getPoint());
         Point newPoint = new Point(p.x, p.y);
         getScene().addObject(new GraphicsPoint(newPoint));
         getScene().repaint();
-        getCurve().points.add(newPoint);
+        getPointList().points().add(newPoint);
 
-        if(getCurve().points.size() == 4){
-            Ermit ermit = new Ermit(getCurve());
+        if(getPointList().points().size() == 4){
+            Ermit ermit = new Ermit(getPointList());
             getScene().addObject(ermit);
             getScene().repaint();
-            setCurve(null);
+            setPointList(null);
         }
     }
 }

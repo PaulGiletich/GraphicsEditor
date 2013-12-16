@@ -20,10 +20,10 @@ public class BresenhamLine extends AbstractLine {
         public static void draw(GraphicsScene scene, Line line) {
             Debugger debugger = Debugger.getDebugger();
 
-            int x0 = (int) line.start.x;
-            int x1 = (int) line.end.x;
-            int y0 = (int) line.start.y;
-            int y1 = (int) line.end.y;
+            int x0 = (int) line.start().getX();
+            int x1 = (int) line.end().getX();
+            int y0 = (int) line.start().getY();
+            int y1 = (int) line.end().getY();
 
             int dX = Math.abs(x0 - x1);
             int dY = Math.abs(y0 - y1);

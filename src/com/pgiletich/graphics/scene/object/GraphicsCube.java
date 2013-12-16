@@ -21,7 +21,7 @@ public class GraphicsCube extends GraphicsObject {
 
         Point[] ps = new Point[8];
         for(int i = 0; i < getShape().points.length; i++){
-            ps[i] = PointUtil.projection(getShape().points[i], getShape().pos.x, getShape().pos.y, z, getShape().size);
+            ps[i] = PointUtil.projection(getShape().points[i], getShape().pos.getX(), getShape().pos.getY(), z, getShape().size);
         }
 
         BresenhamLine.Drawer.draw(scene, new Line(ps[0], ps[1]));

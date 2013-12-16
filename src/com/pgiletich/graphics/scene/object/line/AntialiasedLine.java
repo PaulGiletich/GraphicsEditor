@@ -14,57 +14,63 @@ public class AntialiasedLine extends AbstractLine {
 
     @Override
     public void paint(GraphicsScene scene) {
-        Debugger debugger = Debugger.getDebugger();
+        Drawer.draw(scene, getShape());
+    }
 
-        Line line = getShape();
-        int x0 = (int) line.end.x;
-        int y0 = (int) line.end.y;
-        int x1 = (int) line.start.x;
-        int y1 = (int) line.start.y;
+    public static class Drawer {
 
-        int dx = x1 - x0;
-        int dy = y1 - y0;
+        public static void draw(GraphicsScene scene, Line line) {
+            Debugger debugger = Debugger.getDebugger();
 
-        boolean steep = Math.abs(dy) > Math.abs(dx);
-        if(steep){
-            x0 = (int) line.start.y;
-            y0 = (int) line.start.x;
-            x1 = (int) line.end.y;
-            y1 = (int) line.end.x;
-        }
-        if (x0 > x1){
-            int tmp = x0;
-            x0 = x1;
-            x1 = tmp;
-            tmp = y0;
-            y0 = y1;
-            y1 = tmp;
-        }
+            int x0 = (int) line.end().getX();
+            int y0 = (int) line.end().getY();
+            int x1 = (int) line.start().getX();
+            int y1 = (int) line.start().getY();
 
-        dx = x1 - x0;
-        dy = y1 - y0;
+            int dx = x1 - x0;
+            int dy = y1 - y0;
 
-        float gradient = (float)dy / dx;
-        float y = y0;
-        for(int x = x0; x < x1; x++, y += gradient){
-            if(!debugger.hasNextStep()){
-                if(steep){
-                    scene.fillPixel((int)y, x, 0.1f* reverseFloatPart(y));
-                    scene.fillPixel((int)y+1, x, 0.1f* floatPart(y));
-                }
-                else{
-                    scene.fillPixel(x, (int)y, 0.1f* reverseFloatPart(y));
-                    scene.fillPixel(x, (int)y+1, 0.1f* floatPart(y));
-                }
+            boolean steep = Math.abs(dy) > Math.abs(dx);
+            if(steep){
+                x0 = (int) line.start().getY();
+                y0 = (int) line.start().getX();
+                x1 = (int) line.end().getY();
+                y1 = (int) line.end().getX();
             }
-            else{
-                if(steep){
-                    scene.fillPixel((int)y, x, reverseFloatPart(y));
-                    scene.fillPixel((int)y+1, x, floatPart(y));
+            if (x0 > x1){
+                int tmp = x0;
+                x0 = x1;
+                x1 = tmp;
+                tmp = y0;
+                y0 = y1;
+                y1 = tmp;
+            }
+
+            dx = x1 - x0;
+            dy = y1 - y0;
+
+            float gradient = (float)dy / dx;
+            float y = y0;
+            for(int x = x0; x < x1; x++, y += gradient){
+                if(!debugger.hasNextStep()){
+                    if(steep){
+                        scene.fillPixel((int)y, x, 0.1f* reverseFloatPart(y));
+                        scene.fillPixel((int)y+1, x, 0.1f* floatPart(y));
+                    }
+                    else{
+                        scene.fillPixel(x, (int)y, 0.1f* reverseFloatPart(y));
+                        scene.fillPixel(x, (int)y+1, 0.1f* floatPart(y));
+                    }
                 }
                 else{
-                    scene.fillPixel(x, (int)y, reverseFloatPart(y));
-                    scene.fillPixel(x, (int)y+1, floatPart(y));
+                    if(steep){
+                        scene.fillPixel((int)y, x, reverseFloatPart(y));
+                        scene.fillPixel((int)y+1, x, floatPart(y));
+                    }
+                    else{
+                        scene.fillPixel(x, (int)y, reverseFloatPart(y));
+                        scene.fillPixel(x, (int)y+1, floatPart(y));
+                    }
                 }
             }
         }

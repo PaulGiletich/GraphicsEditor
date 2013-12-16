@@ -1,23 +1,22 @@
 package com.pgiletich.graphics.model;
 
+import java.util.Arrays;
+
 public class Point implements GeometricShape{
-    public double x;
-    public double y;
-    public double z;
-    public double i;
+    private double[] coords;
 
     public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
-        this.z = 0;
-        this.i = 0;
+        coords = new double[2];
+        this.setX(x);
+        this.setY(y);
     }
 
     public Point(double x, double y, double z, double i) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.i = i;
+        coords = new double[4];
+        this.setX(x);
+        this.setY(y);
+        this.setZ(z);
+        this.setI(i);
     }
 
     @Override
@@ -27,21 +26,50 @@ public class Point implements GeometricShape{
 
         Point point = (Point) o;
 
-        if (i != point.i) return false;
-        if (x != point.x) return false;
-        if (y != point.y) return false;
-        if (z != point.z) return false;
+        if (!Arrays.equals(coords, point.coords)) return false;
 
         return true;
     }
 
-    //yeah, i can explain this
     @Override
     public int hashCode() {
-        int result = (int) x;
-        result = (int) (31 * result + y);
-        result = (int) (31 * result + z);
-        result = (int) (31 * result + i);
-        return result;
+        return Arrays.hashCode(coords);
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" + Arrays.toString(coords) + '}';
+    }
+
+    public double getX() {
+        return coords[0];
+    }
+
+    public void setX(double x) {
+        this.coords[0] = x;
+    }
+
+    public double getY() {
+        return coords[1];
+    }
+
+    public void setY(double y) {
+        this.coords[1] = y;
+    }
+
+    public double getZ() {
+        return coords[2];
+    }
+
+    public void setZ(double z) {
+        this.coords[2] = z;
+    }
+
+    public double getI() {
+        return coords[3];
+    }
+
+    public void setI(double i) {
+        this.coords[3] = i;
     }
 }

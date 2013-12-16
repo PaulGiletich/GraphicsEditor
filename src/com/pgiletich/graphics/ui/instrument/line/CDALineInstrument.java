@@ -31,8 +31,8 @@ public class CDALineInstrument extends AbstractLineInstrument {
     @Override
     public void mouseDragged(MouseEvent e) {
         Point p = getScene().toSceneCoords(e.getPoint());
-        getLine().end.x = p.x;
-        getLine().end.y = p.y;
+        getLine().end().setX(p.x);
+        getLine().end().setY(p.y);
         getScene().repaint();
     }
 }

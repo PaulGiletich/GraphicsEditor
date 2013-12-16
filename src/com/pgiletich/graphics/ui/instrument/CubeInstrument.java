@@ -18,7 +18,7 @@ public class CubeInstrument extends InstrumentStrategy {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {//TODO point drag
         lastMousePos = e.getPoint();
         if((e.getModifiers() & (InputEvent.CTRL_MASK | InputEvent.ALT_MASK | InputEvent.SHIFT_MASK)) != 0){
             return;
@@ -50,8 +50,8 @@ public class CubeInstrument extends InstrumentStrategy {
             }
         }
         if((e.getModifiers() & InputEvent.SHIFT_MASK) == InputEvent.SHIFT_MASK){
-            cube.getShape().pos.y += e.getY() - lastMousePos.y;
-            cube.getShape().pos.x += e.getX() - lastMousePos.x;
+            cube.getShape().pos.setY(cube.getShape().pos.getY() + e.getY() - lastMousePos.y);
+            cube.getShape().pos.setX(cube.getShape().pos.getX() + e.getX() - lastMousePos.x);
         }
         getScene().repaint();
         lastMousePos = e.getPoint();
