@@ -1,10 +1,7 @@
 package com.pgiletich.graphics.ui;
 
 import com.pgiletich.graphics.scene.GraphicsScene;
-import com.pgiletich.graphics.ui.instrument.CubeInstrument;
-import com.pgiletich.graphics.ui.instrument.HandInstrument;
-import com.pgiletich.graphics.ui.instrument.InstrumentStrategy;
-import com.pgiletich.graphics.ui.instrument.TriangulationInstrument;
+import com.pgiletich.graphics.ui.instrument.*;
 import com.pgiletich.graphics.ui.panels.CurvesPanel;
 import com.pgiletich.graphics.ui.panels.DebugPanel;
 import com.pgiletich.graphics.ui.panels.LinesPanel;
@@ -40,19 +37,39 @@ public class MainWindow extends JFrame {
         toolBar.setOrientation(SwingConstants.VERTICAL);
 
         toolBar.add(new LinesPanel(this));
+
+        toolBar.add(new JButton(new AbstractAction("Circle") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setInstrument(new CircleInstrument(MainWindow.this));
+            }
+        }));
+        toolBar.add(new JButton(new AbstractAction("Parabola") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setInstrument(new ParabolaInstrument(MainWindow.this));
+            }
+        }));
+        toolBar.addSeparator();
+
         toolBar.add(new CurvesPanel(this));
+
         toolBar.add(new JButton(new AbstractAction("Cube") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setInstrument(new CubeInstrument(MainWindow.this));
             }
         }));
+        toolBar.addSeparator();
+
         toolBar.add(new JButton(new AbstractAction("Triangulation") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setInstrument(new TriangulationInstrument(MainWindow.this));
             }
         }));
+        toolBar.addSeparator();
+
         toolBar.add(new WindowInstrumentsPanel(this));
 
         return toolBar;

@@ -57,6 +57,10 @@ public class GraphicsScene extends JPanel {
         tmpGraphics.fillRect(x * scale, y * scale, scale, scale);
     }
 
+    public void fillPixel(double x, double y) {
+        fillPixel((int) x, (int) y);
+    }
+
     public void fillPixel(int x, int y, float alpha){
         setFillAlpha(alpha);
         tmpGraphics.fillRect(x * scale, y * scale, scale, scale);
@@ -105,5 +109,10 @@ public class GraphicsScene extends JPanel {
             }
         }
         return null;
+    }
+
+    public GraphicsScene clear() {
+        objects.clear();
+        return this;
     }
 }

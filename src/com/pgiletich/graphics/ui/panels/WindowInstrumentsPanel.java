@@ -25,6 +25,12 @@ public class WindowInstrumentsPanel extends JToolBar {
                 window.setInstrument(new MoveInstrument(window));
             }
         }));
+        add(new JButton(new AbstractAction("Clear") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                window.getScene().clear().repaint();
+        }
+        }));
 
         addSeparator();
     }

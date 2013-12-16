@@ -5,11 +5,12 @@ import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.model.Point;
 import com.pgiletich.graphics.model.PointSet;
 import com.pgiletich.graphics.scene.GraphicsScene;
-import com.pgiletich.graphics.scene.object.line.CDALine;
 import delaunay.Pnt;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.pgiletich.graphics.scene.object.line.AntialiasedLine.Drawer.draw;
 
 public class GraphicsTriangulation extends GraphicsObject {
     private static final Triangle boundingTriangle = new Triangle(
@@ -50,7 +51,7 @@ public class GraphicsTriangulation extends GraphicsObject {
         delaunay.Triangulation triangulation = new delaunay.Triangulation(new delaunay.Triangle(boundingBox));
 
         for(Point point: getShape().points()){
-            triangulation.delaunayPlace(new Pnt(point.getX(), point.getY()));
+            triangulation.delaunayPlace(new Pnt(point.x(), point.y()));
         }
 
         Set<Set<Point>> drawnEdges = new HashSet<>();
@@ -87,15 +88,15 @@ public class GraphicsTriangulation extends GraphicsObject {
 
 
             if(!drawnEdges.contains(edge1)){
-                CDALine.Drawer.draw(scene, line1);
+                draw(scene, line1);
                 drawnEdges.add(edge1);
             }
             if(!drawnEdges.contains(edge2)){
-                CDALine.Drawer.draw(scene, line2);
+                draw(scene, line2);
                 drawnEdges.add(edge2);
             }
             if(!drawnEdges.contains(edge3)){
-                CDALine.Drawer.draw(scene, line3);
+                draw(scene, line3);
                 drawnEdges.add(edge3);
             }
         }

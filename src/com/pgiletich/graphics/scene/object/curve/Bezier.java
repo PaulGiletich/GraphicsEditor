@@ -29,19 +29,19 @@ public class Bezier extends AbstractCurve {
         
         Matrix xMatrix = new Matrix(
                 new double[][]{
-                        {points.get(0).getX()},
-                        {points.get(1).getX()},
-                        {points.get(2).getX()},
-                        {points.get(3).getX()}
+                        {points.get(0).x()},
+                        {points.get(1).x()},
+                        {points.get(2).x()},
+                        {points.get(3).x()}
                 }
         );
 
         Matrix yMatrix = new Matrix(
                 new double[][]{
-                        {points.get(0).getY()},
-                        {points.get(1).getY()},
-                        {points.get(2).getY()},
-                        {points.get(3).getY()}
+                        {points.get(0).y()},
+                        {points.get(1).y()},
+                        {points.get(2).y()},
+                        {points.get(3).y()}
                 }
         );
 

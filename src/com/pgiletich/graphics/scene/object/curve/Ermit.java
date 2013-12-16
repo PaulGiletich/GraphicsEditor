@@ -32,18 +32,18 @@ public class Ermit extends AbstractCurve {
 
         Matrix xMatrix = new Matrix(
                 new double[][]{
-                        {points.get(0).getX()},
-                        {points.get(3).getX()},
-                        {r1.getX()},
-                        {r4.getX()}
+                        {points.get(0).x()},
+                        {points.get(3).x()},
+                        {r1.x()},
+                        {r4.x()}
                 });
 
         Matrix yMatrix = new Matrix(
                 new double[][]{
-                        {points.get(0).getY()},
-                        {points.get(3).getY()},
-                        {r1.getY()},
-                        {r4.getY()}
+                        {points.get(0).y()},
+                        {points.get(3).y()},
+                        {r1.y()},
+                        {r4.y()}
                 });
 
         for (double t = 0; t <= 1; t += tStep) {
@@ -54,7 +54,7 @@ public class Ermit extends AbstractCurve {
     }
 
     private Point calculateRVector(Point p1, Point p2) {
-        return new Point((int) (p2.getX() - p1.getX()), (int) (p2.getY() - p1.getY()));
+        return new Point((int) (p2.x() - p1.x()), (int) (p2.y() - p1.y()));
     }
 
     private double calculatePoint(double t, Matrix pointsMatrix) {

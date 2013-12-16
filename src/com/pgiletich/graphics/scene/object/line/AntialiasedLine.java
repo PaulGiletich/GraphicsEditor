@@ -22,20 +22,20 @@ public class AntialiasedLine extends AbstractLine {
         public static void draw(GraphicsScene scene, Line line) {
             Debugger debugger = Debugger.getDebugger();
 
-            int x0 = (int) line.end().getX();
-            int y0 = (int) line.end().getY();
-            int x1 = (int) line.start().getX();
-            int y1 = (int) line.start().getY();
+            int x0 = (int) line.end().x();
+            int y0 = (int) line.end().y();
+            int x1 = (int) line.start().x();
+            int y1 = (int) line.start().y();
 
             int dx = x1 - x0;
             int dy = y1 - y0;
 
             boolean steep = Math.abs(dy) > Math.abs(dx);
             if(steep){
-                x0 = (int) line.start().getY();
-                y0 = (int) line.start().getX();
-                x1 = (int) line.end().getY();
-                y1 = (int) line.end().getX();
+                x0 = (int) line.start().y();
+                y0 = (int) line.start().x();
+                x1 = (int) line.end().y();
+                y1 = (int) line.end().x();
             }
             if (x0 > x1){
                 int tmp = x0;

@@ -8,9 +8,9 @@ import delaunay.Pnt;
 public class PointUtil {
 
     public static Point projection(Point p, double width, double height, int distance, int fov) {
-        double factor = fov / (distance + p.getZ());
-        double x = p.getX() * factor + width;
-        double y = p.getY() * factor + height;
+        double factor = fov / (distance + p.z());
+        double x = p.x() * factor + width;
+        double y = p.y() * factor + height;
 
         return new Point(x, y);
     }
@@ -19,10 +19,10 @@ public class PointUtil {
         return new Matrix(
                 new double[][]{
                         new double[]{
-                                p.getX(),
-                                p.getY(),
-                                p.getZ(),
-                                p.getI()
+                                p.x(),
+                                p.y(),
+                                p.z(),
+                                p.i()
                         }
                 });
     }
@@ -30,27 +30,27 @@ public class PointUtil {
     public static Point circumcenter(Point[] simplex) {
         Pnt[] ps = new Pnt[3];
         for(int i = 0; i < simplex.length; i++){
-            ps[i] = new Pnt(simplex[i].getX(), simplex[i].getY());
+            ps[i] = new Pnt(simplex[i].x(), simplex[i].y());
         }
         Pnt center = Pnt.circumcenter(ps);
         return new Point(center.coord(0), center.coord(1));
     }
 
     public static boolean isInside(Point point, Triangle triangle) {
-        Pnt p = new Pnt(point.getX(), point.getY());
+        Pnt p = new Pnt(point.x(), point.y());
         Point[] points = triangle.getPoints();
         Pnt[] ps = new Pnt[3];
         for(int i = 0; i < points.length; i++){
-            ps[i] = new Pnt(points[i].getX(), points[i].getY());
+            ps[i] = new Pnt(points[i].x(), points[i].y());
         }
         return p.isOutside(ps) == null;
     }
 
     public static int vsCircumcircle(Point myPoint, Point[] mySimplex) {
-        Pnt p = new Pnt(myPoint.getX(), myPoint.getY());
+        Pnt p = new Pnt(myPoint.x(), myPoint.y());
         Pnt[] ps = new Pnt[3];
         for(int i = 0; i < mySimplex.length; i++){
-            ps[i] = new Pnt(mySimplex[i].getX(), mySimplex[i].getY());
+            ps[i] = new Pnt(mySimplex[i].x(), mySimplex[i].y());
         }
 
         return p.vsCircumcircle(ps);

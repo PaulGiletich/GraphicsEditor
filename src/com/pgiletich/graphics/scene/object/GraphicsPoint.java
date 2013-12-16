@@ -19,7 +19,7 @@ public class GraphicsPoint extends GraphicsObject {
         }
         Point p = getShape();
         scene.setColor(Color.BLUE);
-        scene.fillPixel((int) p.getX(), (int) p.getY());
+        scene.fillPixel((int) p.x(), (int) p.y());
     }
 
     @Override

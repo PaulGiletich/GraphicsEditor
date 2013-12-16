@@ -34,19 +34,19 @@ public class BSpline extends AbstractCurve {
 
             Matrix xMatrix = new Matrix(
                     new double[][]{
-                            {points.get(i+0).getX()},
-                            {points.get(i+1).getX()},
-                            {points.get(i+2).getX()},
-                            {points.get(i+3).getX()}
+                            {points.get(i+0).x()},
+                            {points.get(i+1).x()},
+                            {points.get(i+2).x()},
+                            {points.get(i+3).x()}
                     }
             );
 
             Matrix yMatrix = new Matrix(
                     new double[][]{
-                            {points.get(i+0).getY()},
-                            {points.get(i+1).getY()},
-                            {points.get(i+2).getY()},
-                            {points.get(i+3).getY()}
+                            {points.get(i+0).y()},
+                            {points.get(i+1).y()},
+                            {points.get(i+2).y()},
+                            {points.get(i+3).y()}
                     }
             );
 

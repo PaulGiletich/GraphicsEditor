@@ -41,23 +41,25 @@ public class Point implements GeometricShape{
         return "Point{" + Arrays.toString(coords) + '}';
     }
 
-    public double getX() {
+    public double x() {
         return coords[0];
     }
 
-    public void setX(double x) {
+    public Point setX(double x) {
         this.coords[0] = x;
+        return this;
     }
 
-    public double getY() {
+    public double y() {
         return coords[1];
     }
 
-    public void setY(double y) {
+    public Point setY(double y) {
         this.coords[1] = y;
+        return this;
     }
 
-    public double getZ() {
+    public double z() {
         return coords[2];
     }
 
@@ -65,7 +67,7 @@ public class Point implements GeometricShape{
         this.coords[2] = z;
     }
 
-    public double getI() {
+    public double i() {
         return coords[3];
     }
 

@@ -22,13 +22,13 @@ public class CDALine extends AbstractLine {
             Debugger debugger = Debugger.getDebugger();
 
             int length = (int) Math.max( // Getting maximum length
-                    Math.abs(line.start().getX() - line.end().getX()),
-                    Math.abs(line.start().getY() - line.end().getY()));
-            float dx = (float) ((line.end().getX() - line.start().getX()) / (float)length); // values, by which x and y change each step
-            float dy = (float) ((line.end().getY() - line.start().getY()) / (float)length);
+                    Math.abs(line.start().x() - line.end().x()),
+                    Math.abs(line.start().y() - line.end().y()));
+            float dx = (float) ((line.end().x() - line.start().x()) / (float)length); // values, by which x and y change each step
+            float dy = (float) ((line.end().y() - line.start().y()) / (float)length);
             int i = 0;
-            float x = (float) (line.start().getX() + MathUtil.sign(dx) * 0.5f);
-            float y = (float) (line.start().getY() + MathUtil.sign(dy) * 0.5f);
+            float x = (float) (line.start().x() + MathUtil.sign(dx) * 0.5f);
+            float y = (float) (line.start().y() + MathUtil.sign(dy) * 0.5f);
 
             while(i++ < length){
                 if(!debugger.hasNextStep()){

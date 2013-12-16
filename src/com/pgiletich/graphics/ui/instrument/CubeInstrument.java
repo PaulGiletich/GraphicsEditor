@@ -18,15 +18,13 @@ public class CubeInstrument extends InstrumentStrategy {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {//TODO point drag
+    public void mousePressed(MouseEvent e) {
         lastMousePos = e.getPoint();
         if((e.getModifiers() & (InputEvent.CTRL_MASK | InputEvent.ALT_MASK | InputEvent.SHIFT_MASK)) != 0){
             return;
         }
-        if((e.getModifiers() & InputEvent.ALT_MASK) == InputEvent.ALT_MASK){
-            return;
-        }
-        cube = new GraphicsCube(new Cube(new Point(e.getPoint().x, e.getPoint().y), 180));
+        java.awt.Point p = getScene().toSceneCoords(e.getPoint());
+        cube = new GraphicsCube(new Cube(new Point(p.x, p.y), 180));
         getScene().addObject(cube);
         getScene().repaint();
     }
@@ -50,8 +48,8 @@ public class CubeInstrument extends InstrumentStrategy {
             }
         }
         if((e.getModifiers() & InputEvent.SHIFT_MASK) == InputEvent.SHIFT_MASK){
-            cube.getShape().pos.setY(cube.getShape().pos.getY() + e.getY() - lastMousePos.y);
-            cube.getShape().pos.setX(cube.getShape().pos.getX() + e.getX() - lastMousePos.x);
+            cube.getShape().pos.setY(cube.getShape().pos.y() + e.getY() - lastMousePos.y);
+            cube.getShape().pos.setX(cube.getShape().pos.x() + e.getX() - lastMousePos.x);
         }
         getScene().repaint();
         lastMousePos = e.getPoint();
