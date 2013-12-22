@@ -4,11 +4,10 @@ import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.model.Point;
 import com.pgiletich.graphics.model.Rect;
 import com.pgiletich.graphics.scene.GraphicsScene;
-import com.pgiletich.graphics.util.LineUtil;
 
 import static com.pgiletich.graphics.scene.object.line.CDALine.Drawer.draw;
 
-public class ClipRect extends GraphicsObject {
+public class ClipRect extends GraphicsObject implements Clipper {
 
     public ClipRect(Rect shape) {
         super(shape);
@@ -51,7 +50,8 @@ public class ClipRect extends GraphicsObject {
                 (p.y() < r.top() ? TOP : 0);
     }
 
-    public void clip(Line line){
+    @Override
+    public boolean clip(Line line){
         Rect rect = getShape();
 
         int startCode, endCode;
@@ -63,18 +63,18 @@ public class ClipRect extends GraphicsObject {
         startCode = vcode(rect, start);
         endCode = vcode(rect, end);
 
-        if(startCode == 0 && endCode == 0)
-            return;
+        if(startCode == INSIDE && endCode == INSIDE)
+            return true;
 
-        if ((startCode & endCode) != 0)
-            return;
+        if ((startCode & endCode) != INSIDE)
+            return false;
 
         while(!(startCode == INSIDE && endCode == INSIDE)){
 
             if (startCode == INSIDE && endCode != INSIDE) {
-                LineUtil.flip(line);
+                line.flip();
                 clip(line);
-                return;
+                return true;
             }
 
             if ((startCode & LEFT) != 0) {
@@ -97,6 +97,7 @@ public class ClipRect extends GraphicsObject {
             startCode = vcode(rect, start);
             endCode = vcode(rect, end);
         }
+        return true;
     }
 
     @Override

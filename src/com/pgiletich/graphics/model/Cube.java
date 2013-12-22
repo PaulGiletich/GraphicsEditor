@@ -2,7 +2,6 @@ package com.pgiletich.graphics.model;
 
 import com.pgiletich.graphics.util.Matrix;
 import com.pgiletich.graphics.util.PlaneUtil;
-import com.pgiletich.graphics.util.PointUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class Cube implements GeometricShape {
 
     public Matrix getPlanesMatrix(){
 
-        Point innerPoint = PointUtil.divide(PointUtil.sum(points[3], points[5]), 2);
+        Point innerPoint = (points[3].add(points[5])).divide(2);
         List<Matrix> planes = new ArrayList<>();
         for (Polygon p: getSides()){
             Matrix planeMatrix = PlaneUtil.getPlaneMatrix(p.points().get(0), p.points().get(1), p.points().get(2));

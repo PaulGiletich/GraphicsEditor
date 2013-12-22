@@ -9,6 +9,10 @@ public class Point implements GeometricShape{
 
     private double[] coords;
 
+    public Point(double... coords){
+        this.coords = coords;
+    }
+
     public Point(double x, double y) {
         coords = new double[2];
         this.setX(x);
@@ -42,7 +46,7 @@ public class Point implements GeometricShape{
 
     @Override
     public String toString() {
-        return "Point{" + Arrays.toString(coords) + '}';
+        return "Point" + Arrays.toString(coords);
     }
 
     public double x() {
@@ -77,5 +81,47 @@ public class Point implements GeometricShape{
 
     public void setI(double i) {
         this.coords[3] = i;
+    }
+
+    public Point add(Point b){
+        int newLength = Math.min(coords.length, b.coords.length);
+        double[] newCoords = new double[newLength];
+        for(int i = 0; i < newLength; i++){
+            newCoords[i] = coords[i] + b.coords[i];
+        }
+        return new Point(newCoords);
+    }
+
+    public Point sub(Point b){
+        int newLength = Math.min(coords.length, b.coords.length);
+        double[] newCoords = new double[newLength];
+        for(int i = 0; i < newLength; i++){
+            newCoords[i] = coords[i] - b.coords[i];
+        }
+        return new Point(newCoords);
+    }
+
+    public Point mult(double m){
+        double[] newCoords = new double[coords.length];
+        for(int i = 0; i < coords.length; i++){
+            newCoords[i] = coords[i] * m;
+        }
+        return new Point(newCoords);
+    }
+
+    public double dot(Point b){
+        return x() * b.x() + y() * b.y();
+    }
+
+    public double cross(Point b){
+        return x() * b.y() - y() * b.x();
+    }
+
+    public Point divide(double d) {
+        double[] newCoords = new double[coords.length];
+        for(int i = 0; i < coords.length; i++){
+            newCoords[i] = coords[i] / d;
+        }
+        return new Point(newCoords);
     }
 }

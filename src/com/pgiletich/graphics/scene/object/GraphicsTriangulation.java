@@ -1,9 +1,8 @@
 package com.pgiletich.graphics.scene.object;
 
-import com.pgiletich.graphics.logic.Triangle;
 import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.model.Point;
-import com.pgiletich.graphics.model.PointSet;
+import com.pgiletich.graphics.model.PointList;
 import com.pgiletich.graphics.scene.GraphicsScene;
 import delaunay.Pnt;
 
@@ -13,36 +12,14 @@ import java.util.Set;
 import static com.pgiletich.graphics.scene.object.line.AntialiasedLine.Drawer.draw;
 
 public class GraphicsTriangulation extends GraphicsObject {
-    private static final Triangle boundingTriangle = new Triangle(
-            new Point(10000, 10000),
-            new Point(10000, -10000),
-            new Point(-10000, 10000));
 
-    public GraphicsTriangulation(PointSet shape) {
+    public GraphicsTriangulation(PointList shape) {
         super(shape);
     }
 
-    //sorry, do not look here. write-only code
+    //do not look here. write-only code
     @Override
     public void paint(GraphicsScene scene) {
-//        Triangulation triangulation = new Triangulation(boundingTriangle);
-//        for(Point point: getShape().points()){
-//            triangulation.place(point);
-//        }
-//
-//        Set<Set<Point>> drawnEdges = new HashSet<>();
-//
-//        for (Triangle triangle: triangulation){
-//            for(Line edge: triangle.getEdges()){
-//                Set<Point> oneEdge = new HashSet<>(2);
-//                    oneEdge.add(edge.start());
-//                    oneEdge.add(edge.end());
-//                if (!drawnEdges.contains(oneEdge)) {
-//                    BresenhamLine.Drawer.draw(scene, edge);
-//                    drawnEdges.add(oneEdge);
-//                }
-//            }
-//        }
         Set<Pnt> boundingBox = new HashSet<Pnt>(){{
             add(new Pnt(10000, 10000));
             add(new Pnt(10000, -10000));
@@ -108,7 +85,7 @@ public class GraphicsTriangulation extends GraphicsObject {
     }
 
     @Override
-    public PointSet getShape() {
-        return (PointSet) super.getShape();
+    public PointList getShape() {
+        return (PointList) super.getShape();
     }
 }

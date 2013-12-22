@@ -10,6 +10,7 @@ import com.pgiletich.graphics.util.PointUtil;
 
 import static com.pgiletich.graphics.scene.object.line.AntialiasedLine.Drawer.draw;
 
+//TODO refactor thrash with perspective transformations codebase
 public class GraphicsCube extends GraphicsObject {
 
     public GraphicsCube(Cube shape) {

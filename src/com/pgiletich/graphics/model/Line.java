@@ -27,4 +27,37 @@ public class Line extends PointList {
     public void setEnd(Point end) {
         points().set(1, end);
     }
+
+    public Point normal(){
+        return new Point(end().y() - start().y(), start().x() - end().x());
+    }
+
+    public Point direction(){
+        return new Point(end().x() - start().x(), end().y() - start().y());
+    }
+
+    public void flip() {
+        Point tmp = start();
+        setStart(end());
+        setEnd(tmp);
+    }
+
+    public boolean isLeft(Point c) {
+        Point a = start();
+        Point b = end();
+        return ((b.x() - a.x())*(c.y() - a.y()) - (b.y() - a.y())*(c.x() - a.x())) > 0;
+    }
+
+    public double IntersectionParameter(Line o){
+        Point segmentToEdge = o.start().sub(this.start());
+        Point segmentDir = this.direction();
+        Point edgeDir = o.direction();
+
+        return edgeDir.cross(segmentToEdge) / edgeDir.cross(segmentDir);
+    }
+
+    public Line morph(double tStart, double tEnd) {
+        Point d = direction();
+        return new Line(this.start().add(d.mult(tStart)), this.start().add(d.mult(tEnd)));
+    }
 }
