@@ -1,6 +1,9 @@
 package com.pgiletich.graphics.ui;
 
+import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.scene.GraphicsScene;
+import com.pgiletich.graphics.scene.object.ClipRect;
+import com.pgiletich.graphics.scene.object.GraphicsObject;
 import com.pgiletich.graphics.ui.instrument.*;
 import com.pgiletich.graphics.ui.panels.CurvesPanel;
 import com.pgiletich.graphics.ui.panels.DebugPanel;
@@ -66,6 +69,32 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setInstrument(new TriangulationInstrument(MainWindow.this));
+            }
+        }));
+        toolBar.addSeparator();
+
+        toolBar.add(new JButton(new AbstractAction("ClipRect") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setInstrument(new ClipRectInstrument(MainWindow.this));
+            }
+        }));
+
+        JPanel clipPanel = new JPanel(new FlowLayout());
+        toolBar.add(clipPanel);
+        clipPanel.add(new JButton(new AbstractAction("clip") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for(GraphicsObject object: scene){
+                    if(object instanceof ClipRect){
+                        for(GraphicsObject l: scene){
+                            if(l.getShape() instanceof Line){
+                                ((ClipRect) object).clip((Line) l.getShape());
+                            }
+                        }
+                    }
+                }
+                scene.repaint();
             }
         }));
         toolBar.addSeparator();

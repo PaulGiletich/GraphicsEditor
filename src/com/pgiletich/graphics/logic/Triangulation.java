@@ -50,6 +50,7 @@ public class Triangulation implements Iterable<Triangle>{
                 if (marked.contains(neighbor)) continue;
                 marked.add(neighbor);
                 toBeChecked.add(neighbor);
+                int fuck = 1;
             }
         }
         return encroached;

@@ -5,9 +5,10 @@ import com.pgiletich.graphics.scene.object.GraphicsObject;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class GraphicsScene extends JPanel {
+public class GraphicsScene extends JPanel implements Iterable<GraphicsObject> {
     private int scale = 1;
     private List<GraphicsObject> objects = new ArrayList<>();
     private Graphics tmpGraphics;
@@ -114,5 +115,10 @@ public class GraphicsScene extends JPanel {
     public GraphicsScene clear() {
         objects.clear();
         return this;
+    }
+
+    @Override
+    public Iterator<GraphicsObject> iterator() {
+        return objects.iterator();
     }
 }

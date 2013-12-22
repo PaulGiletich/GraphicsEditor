@@ -3,6 +3,10 @@ package com.pgiletich.graphics.model;
 import java.util.Arrays;
 
 public class Point implements GeometricShape{
+    public double[] getCoords() {
+        return coords;
+    }
+
     private double[] coords;
 
     public Point(double x, double y) {

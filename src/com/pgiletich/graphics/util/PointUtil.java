@@ -27,6 +27,15 @@ public class PointUtil {
                 });
     }
 
+    public static Point sum(Point p1, Point p2){
+        return new Point(p1.x() + p2.x(), p1.y()+ p2.y(), p1.z() + p2.z(), p1.i() + p2.i());
+    }
+
+    public static Point divide(Point p, int d){
+        return new Point(p.x()/d, p.y()/d, p.z()/d, p.i()/d);
+    }
+
+
     public static Point circumcenter(Point[] simplex) {
         Pnt[] ps = new Pnt[3];
         for(int i = 0; i < simplex.length; i++){

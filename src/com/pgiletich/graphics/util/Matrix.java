@@ -11,10 +11,10 @@ public class Matrix {
 
     public Matrix multiply(Matrix other) {
 
-        int aRows = data.length;
-        int aColumns = this.data[0].length;
-        int bRows = other.data.length;
-        int bColumns = other.data[0].length;
+        int aRows = rowCount();
+        int aColumns = columnCount();
+        int bRows = other.rowCount();
+        int bColumns = other.columnCount();
 
         if (aColumns != bRows) {
             throw new IllegalArgumentException("A:Rows: " + aColumns + " did not match B:Columns " + bRows + ".");
@@ -33,7 +33,23 @@ public class Matrix {
         return new Matrix(result);
     }
 
+    public int columnCount() {
+        return data[0].length;
+    }
+
+    public int rowCount(){
+        return data.length;
+    }
+
     public double get(int row, int column){
         return data[row][column];
+    }
+
+    public void multiply(int m) {
+        for (int i = 0; i < rowCount(); i++) {
+            for (int j = 0; j < columnCount(); j++) {
+                data[i][j] *= m;
+            }
+        }
     }
 }
