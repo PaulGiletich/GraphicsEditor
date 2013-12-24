@@ -5,6 +5,8 @@ import com.pgiletich.graphics.logic.Triangle;
 import com.pgiletich.graphics.model.Point;
 import delaunay.Pnt;
 
+import java.util.Collection;
+
 public class PointUtil {
 
     public static Point projection(Point p, double width, double height, int distance, int fov) {
@@ -25,6 +27,20 @@ public class PointUtil {
                                 p.i()
                         }
                 });
+    }
+
+    public static Point mean(Collection<Point> points){
+        double[] newCoords = new double[4];
+        for (Point p: points){
+            double[] coords = p.getCoords();
+            for (int i = 0; i < coords.length; i++) {
+                newCoords[i] += coords[i];
+            }
+        }
+        for (int i = 0; i < newCoords.length; i++){
+            newCoords[i] /= points.size();
+        }
+        return new Point(newCoords);
     }
 
     public static Point circumcenter(Point[] simplex) {

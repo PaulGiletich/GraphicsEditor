@@ -23,10 +23,13 @@ public class ClipPolygon extends GraphicsObject implements Clipper {
     @Override
     public boolean clip(Line line){
         Polygon poly = getShape();
+        if(!poly.isConvex()){
+            throw new RuntimeException("Need convex polygon for clipping");
+        }
         Point subjDir = line.direction();
         double tStart = 0;
         double tEnd = 1.0;
-        for (Line edge: poly.edges())
+        for (Line edge: poly.edgesClockwise())
         {
             double t = line.IntersectionParameter(edge);
             switch (MathUtil.sign(edge.normal().dot(subjDir)))

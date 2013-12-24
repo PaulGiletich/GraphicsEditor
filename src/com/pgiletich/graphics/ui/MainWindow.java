@@ -97,7 +97,9 @@ public class MainWindow extends JFrame {
                     if(object instanceof Clipper){
                         for(GraphicsObject l: scene){
                             if(l.getShape() instanceof Line){
-                                ((Clipper) object).clip((Line) l.getShape());
+                                if(!((Clipper) object).clip((Line) l.getShape())){
+                                    scene.removeObject(l);
+                                }
                             }
                         }
                     }

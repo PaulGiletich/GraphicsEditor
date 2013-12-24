@@ -5,12 +5,14 @@ import com.pgiletich.graphics.scene.object.GraphicsObject;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 public class GraphicsScene extends JPanel implements Iterable<GraphicsObject> {
     private int scale = 1;
     private List<GraphicsObject> objects = new ArrayList<>();
+    private Collection<GraphicsObject> objectsToRemove = new ArrayList<>();
     private Graphics tmpGraphics;
     private Dimension canvasSize;
 
@@ -27,12 +29,20 @@ public class GraphicsScene extends JPanel implements Iterable<GraphicsObject> {
     }
 
     private void paintObjects(Graphics g) {
+        removeObjects();
         tmpGraphics = g;
         for(GraphicsObject object: objects){
             g.setColor(Color.BLACK);
             object.paint(this);
         }
         tmpGraphics = null;
+    }
+
+    private void removeObjects() {
+        for(GraphicsObject object: objectsToRemove){
+            objects.remove(object);
+        }
+        objectsToRemove.clear();
     }
 
     @Override
@@ -120,5 +130,9 @@ public class GraphicsScene extends JPanel implements Iterable<GraphicsObject> {
     @Override
     public Iterator<GraphicsObject> iterator() {
         return objects.iterator();
+    }
+
+    public void removeObject(GraphicsObject l) {
+        objectsToRemove.add(l);
     }
 }

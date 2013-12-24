@@ -24,10 +24,10 @@ public class GraphicsCube extends GraphicsObject {
 
         Polygon[] sides = getShape().getSides();
 
-        Matrix result = PointUtil.getMatrix(pointOfView).multiply(getShape().getPlanesMatrix());
+        Matrix robertsMatrix = PointUtil.getMatrix(pointOfView).multiply(getShape().getPlanesMatrix());
 
-        for (int i = 0; i < result.columnCount(); i++) {
-            if (result.get(0, i) > 0){
+        for (int i = 0; i < robertsMatrix.columnCount(); i++) {
+            if (robertsMatrix.get(0, i) > 0){
                 drawPolygon(scene, sides[i]);
             }
         }

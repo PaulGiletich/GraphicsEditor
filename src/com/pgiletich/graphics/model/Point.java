@@ -3,9 +3,6 @@ package com.pgiletich.graphics.model;
 import java.util.Arrays;
 
 public class Point implements GeometricShape{
-    public double[] getCoords() {
-        return coords;
-    }
 
     private double[] coords;
 
@@ -47,6 +44,14 @@ public class Point implements GeometricShape{
     @Override
     public String toString() {
         return "Point" + Arrays.toString(coords);
+    }
+
+    public double[] getCoords() {
+        return coords;
+    }
+
+    public void setCoord(int index, double val){
+        coords[index] = val;
     }
 
     public double x() {
