@@ -54,22 +54,21 @@ public class ClipRect extends GraphicsObject implements Clipper {
     public boolean clip(Line line){
         Rect rect = getShape();
 
-        int startCode, endCode;
-        Point tmp;
-
         Point start = line.start();
         Point end = line.end();
 
-        startCode = vcode(rect, start);
-        endCode = vcode(rect, end);
+        int startCode = vcode(rect, start);
+        int endCode = vcode(rect, end);
 
-        if(startCode == INSIDE && endCode == INSIDE)
-            return true;
+        while (true) {
 
-        if ((startCode & endCode) != INSIDE)
-            return false;
+            //both inside, return true
+            if(startCode == INSIDE && endCode == INSIDE)
+                return true;
 
-        while(!(startCode == INSIDE && endCode == INSIDE)){
+            //both endpoints are on same side
+            if ((startCode & endCode) != INSIDE)
+                return false;
 
             if (startCode == INSIDE && endCode != INSIDE) {
                 line.flip();
@@ -97,7 +96,6 @@ public class ClipRect extends GraphicsObject implements Clipper {
             startCode = vcode(rect, start);
             endCode = vcode(rect, end);
         }
-        return true;
     }
 
     @Override
