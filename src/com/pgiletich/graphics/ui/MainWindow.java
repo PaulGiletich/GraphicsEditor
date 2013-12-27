@@ -1,15 +1,11 @@
 package com.pgiletich.graphics.ui;
 
-import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.scene.GraphicsScene;
-import com.pgiletich.graphics.scene.object.Clipper;
-import com.pgiletich.graphics.scene.object.GraphicsObject;
-import com.pgiletich.graphics.ui.instrument.*;
-import com.pgiletich.graphics.ui.instrument.curve.PolygonInstrument;
-import com.pgiletich.graphics.ui.panels.CurvesPanel;
-import com.pgiletich.graphics.ui.panels.DebugPanel;
-import com.pgiletich.graphics.ui.panels.LinesPanel;
-import com.pgiletich.graphics.ui.panels.WindowInstrumentsPanel;
+import com.pgiletich.graphics.ui.instrument.CubeInstrument;
+import com.pgiletich.graphics.ui.instrument.HandInstrument;
+import com.pgiletich.graphics.ui.instrument.InstrumentStrategy;
+import com.pgiletich.graphics.ui.instrument.TriangulationInstrument;
+import com.pgiletich.graphics.ui.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,12 +19,11 @@ public class MainWindow extends JFrame {
     }};
 
     public MainWindow(){
-        setSize(800, 600);
+        setSize(900, 700);
 
         this.setJMenuBar(initMenuBar());
         this.setLayout(new BorderLayout());
         this.add(scrollPane, BorderLayout.CENTER);
-        this.add(new DebugPanel(this), BorderLayout.SOUTH);
         this.add(initToolbar(), BorderLayout.WEST);
 
         instrument = new HandInstrument(this);
@@ -41,22 +36,13 @@ public class MainWindow extends JFrame {
         toolBar.setOrientation(SwingConstants.VERTICAL);
 
         toolBar.add(new LinesPanel(this));
+        toolBar.addSeparator();
 
-        toolBar.add(new JButton(new AbstractAction("Circle") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setInstrument(new CircleInstrument(MainWindow.this));
-            }
-        }));
-        toolBar.add(new JButton(new AbstractAction("Parabola") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setInstrument(new ParabolaInstrument(MainWindow.this));
-            }
-        }));
+        toolBar.add(new QuadricsPanel(this));
         toolBar.addSeparator();
 
         toolBar.add(new CurvesPanel(this));
+        toolBar.addSeparator();
 
         toolBar.add(new JButton(new AbstractAction("Cube") {
             @Override
@@ -74,42 +60,15 @@ public class MainWindow extends JFrame {
         }));
         toolBar.addSeparator();
 
-        toolBar.add(new JButton(new AbstractAction("ClipRect") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setInstrument(new ClipRectInstrument(MainWindow.this));
-            }
-        }));
 
-        toolBar.add(new JButton(new AbstractAction("ClipPoly") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setInstrument(new PolygonInstrument(MainWindow.this));
-            }
-        }));
-
-        JPanel clipPanel = new JPanel(new FlowLayout());
-        toolBar.add(clipPanel);
-        clipPanel.add(new JButton(new AbstractAction("clip") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for(GraphicsObject object: scene){
-                    if(object instanceof Clipper){
-                        for(GraphicsObject l: scene){
-                            if(l.getShape() instanceof Line){
-                                if(!((Clipper) object).clip((Line) l.getShape())){
-                                    scene.removeObject(l);
-                                }
-                            }
-                        }
-                    }
-                }
-                scene.repaint();
-            }
-        }));
+        toolBar.add(new ClippingPanel(this));
         toolBar.addSeparator();
 
-        toolBar.add(new WindowInstrumentsPanel(this));
+        toolBar.add(new EquationPanel(this));
+        toolBar.addSeparator();
+
+        toolBar.add(new InstrumentsPanel(this));
+        toolBar.addSeparator();
 
         return toolBar;
     }

@@ -70,12 +70,14 @@ public class ClipRect extends GraphicsObject implements Clipper {
             if ((startCode & endCode) != INSIDE)
                 return false;
 
+            //flip line if start is inside and end is outside
             if (startCode == INSIDE && endCode != INSIDE) {
                 line.flip();
                 clip(line);
                 return true;
             }
 
+            //clipping operations
             if ((startCode & LEFT) != 0) {
                 start.setY(start.y() + (start.y() - end.y()) * (rect.left() - start.x()) / (start.x() - end.x()));
                 start.setX(rect.left());

@@ -1,6 +1,7 @@
 package com.pgiletich.graphics.ui.panels;
 
 import com.pgiletich.graphics.ui.MainWindow;
+import com.pgiletich.graphics.ui.MainWindowStyles;
 import com.pgiletich.graphics.ui.instrument.curve.BSplineInstrument;
 import com.pgiletich.graphics.ui.instrument.curve.BezierCurveInstrument;
 import com.pgiletich.graphics.ui.instrument.curve.ErmitCurveInstrument;
@@ -12,7 +13,9 @@ public class CurvesPanel extends JToolBar {
     public CurvesPanel(final MainWindow window) {
         setFloatable(false);
         setOrientation(SwingConstants.VERTICAL);
-        add(new JLabel("Curves"));
+        JLabel label = new JLabel("Curves");
+        label.setFont(MainWindowStyles.instrumentsPanelHeadingFont);
+        add(label);
 
         add(new JButton(new AbstractAction("Bezier") {
             @Override
@@ -32,8 +35,6 @@ public class CurvesPanel extends JToolBar {
                 window.setInstrument(new ErmitCurveInstrument(window));
             }
         }));
-
-        addSeparator();
     }
 
 }

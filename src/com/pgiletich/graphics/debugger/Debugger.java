@@ -2,7 +2,7 @@ package com.pgiletich.graphics.debugger;
 
 public class Debugger {
     private static int steps = 0;
-    private static boolean pointsEnabled = true;
+    private static boolean pointsEnabled = false;
     private int stepsLeft;
     private static boolean enabled = false;
 

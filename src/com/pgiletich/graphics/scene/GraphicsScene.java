@@ -1,5 +1,7 @@
 package com.pgiletich.graphics.scene;
 
+import com.pgiletich.graphics.debugger.GraphicEquationSolver;
+import com.pgiletich.graphics.model.Point;
 import com.pgiletich.graphics.scene.object.GraphicsObject;
 
 import javax.swing.*;
@@ -10,11 +12,13 @@ import java.util.Iterator;
 import java.util.List;
 
 public class GraphicsScene extends JPanel implements Iterable<GraphicsObject> {
-    private int scale = 1;
+    private int scale = 5;
     private List<GraphicsObject> objects = new ArrayList<>();
     private Collection<GraphicsObject> objectsToRemove = new ArrayList<>();
     private Graphics tmpGraphics;
     private Dimension canvasSize;
+    private List<RepaintListener> listeners = new ArrayList<>();
+
 
     public GraphicsScene(Dimension canvasSize) {
         this.canvasSize = canvasSize;
@@ -22,16 +26,24 @@ public class GraphicsScene extends JPanel implements Iterable<GraphicsObject> {
 
     @Override
     public void paint(Graphics g) {
+        GraphicEquationSolver.clear();
+
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
         paintGrid(g);
         paintObjects(g);
+
+        for(RepaintListener listener: listeners){
+            listener.sceneRepainted();
+        }
     }
 
     private void paintObjects(Graphics g) {
         removeObjects();
         tmpGraphics = g;
         for(GraphicsObject object: objects){
+            GraphicEquationSolver.newObject();
+
             g.setColor(Color.BLACK);
             object.paint(this);
         }
@@ -65,6 +77,15 @@ public class GraphicsScene extends JPanel implements Iterable<GraphicsObject> {
     }
 
     public void fillPixel(int x, int y){
+        if(GraphicEquationSolver.isEnabled){
+            boolean isAnswer = GraphicEquationSolver.addPoint(new Point(x, y));
+            if(isAnswer){
+                tmpGraphics.setColor(Color.CYAN);
+                tmpGraphics.fillRect(x * scale, y * scale, scale, scale);
+                tmpGraphics.setColor(Color.BLACK);
+                return;
+            }
+        }
         tmpGraphics.fillRect(x * scale, y * scale, scale, scale);
     }
 
@@ -107,12 +128,12 @@ public class GraphicsScene extends JPanel implements Iterable<GraphicsObject> {
         return new Dimension(canvasSize.width * scale, canvasSize.height * scale);
     }
 
-    public Point toSceneCoords(Point p){
+    public java.awt.Point toSceneCoords(java.awt.Point p){
         p.setLocation(p.x / scale, p.y / scale);
         return p;
     }
 
-    public GraphicsObject getObjectByPoint(Point p) {
+    public GraphicsObject getObjectByPoint(java.awt.Point p) {
         com.pgiletich.graphics.model.Point point = new com.pgiletich.graphics.model.Point(p.x, p.y);
         for (GraphicsObject object: objects){
             if(object.contains(point)){
@@ -134,5 +155,9 @@ public class GraphicsScene extends JPanel implements Iterable<GraphicsObject> {
 
     public void removeObject(GraphicsObject l) {
         objectsToRemove.add(l);
+    }
+
+    public void addRepaintListener(RepaintListener toAdd) {
+        listeners.add(toAdd);
     }
 }

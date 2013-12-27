@@ -1,4 +1,4 @@
-package delaunay;
+package com.pgiletich.graphics.delaunay;
 
 /*
  * Copyright (c) 2007 by L. Paul Chew.

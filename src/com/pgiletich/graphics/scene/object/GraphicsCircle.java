@@ -45,12 +45,6 @@ public class GraphicsCircle extends GraphicsObject {
                 dFd += 2;
             }
         }
-//        if (x + y == 0) {
-//            baseDrawer.plot(x + c.x, y + c.y);		// 4 октант
-//            baseDrawer.plot(-x + c.x, y + c.y);		// 1 октант
-//            baseDrawer.plot(x + c.x, -y + c.y);		// 5 октант
-//            baseDrawer.plot(-x + c.x, -y + c.y);	// 8 октант
-//        }
     }
 
     @Override

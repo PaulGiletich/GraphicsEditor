@@ -1,10 +1,10 @@
 package com.pgiletich.graphics.scene.object;
 
+import com.pgiletich.graphics.delaunay.Pnt;
 import com.pgiletich.graphics.model.Line;
 import com.pgiletich.graphics.model.Point;
 import com.pgiletich.graphics.model.PointList;
 import com.pgiletich.graphics.scene.GraphicsScene;
-import delaunay.Pnt;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +25,7 @@ public class GraphicsTriangulation extends GraphicsObject {
             add(new Pnt(10000, -10000));
             add(new Pnt(-10000, 10000));
         }};
-        delaunay.Triangulation triangulation = new delaunay.Triangulation(new delaunay.Triangle(boundingBox));
+        com.pgiletich.graphics.delaunay.Triangulation triangulation = new com.pgiletich.graphics.delaunay.Triangulation(new com.pgiletich.graphics.delaunay.Triangle(boundingBox));
 
         for(Point point: getShape().points()){
             triangulation.delaunayPlace(new Pnt(point.x(), point.y()));
@@ -33,7 +33,7 @@ public class GraphicsTriangulation extends GraphicsObject {
 
         Set<Set<Point>> drawnEdges = new HashSet<>();
 
-        for(delaunay.Triangle triangle: triangulation){
+        for(com.pgiletich.graphics.delaunay.Triangle triangle: triangulation){
             if(triangle.containsAny(boundingBox)){
                 continue;
             }

@@ -38,7 +38,7 @@ public class Point implements GeometricShape{
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(coords);
+        return coords != null ? Arrays.hashCode(coords) : 0;
     }
 
     @Override
