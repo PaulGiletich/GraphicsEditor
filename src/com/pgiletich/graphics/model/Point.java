@@ -129,4 +129,8 @@ public class Point implements GeometricShape{
         }
         return new Point(newCoords);
     }
+
+    public double length(){
+        return Math.sqrt(Math.pow(x(), 2) + Math.pow(y(), 2));
+    }
 }

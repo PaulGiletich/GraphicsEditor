@@ -13,37 +13,41 @@ public class GraphicsCircle extends GraphicsObject {
     public void paint(GraphicsScene scene) {
         Circle circle = getShape();
         Point pos = circle.getPos();
-        int r = (int) Math.sqrt(Math.pow(pos.x() - circle.getRadius().x(), 2) +
-                Math.pow(pos.y() - circle.getRadius().y(), 2));
-        int x = -r;
-        int y = 0;
-        int F = 1 - r;
-        int dFs = 3;
-        int dFd = 5 - 2 * r;
-        while (x + y <= 0) {
-            scene.fillPixel(x + pos.x(), y + pos.y());		// 4 октант
-            scene.fillPixel(-x + pos.x(), y + pos.y());		// 1 октант
-            scene.fillPixel(x + pos.x(), -y + pos.y());		// 5 октант
-            scene.fillPixel(-x + pos.x(), -y + pos.y());	// 8 октант
+        Point radius = circle.getRadius();
+        
+        int x0 = (int)pos.x();
+        int y0 = (int)pos.y();
+        int r = (int) pos.sub(radius).length();
+        int x = 0;
+        int y = r;
+        int delta = 1 - 2 * r;
+        int error = 0;
+        while(x <= y) {
+            scene.fillPixel(x0 + x, y0 + y);
+            scene.fillPixel(x0 + x, y0 - y);
+            scene.fillPixel(x0 - x, y0 + y);
+            scene.fillPixel(x0 - x, y0 - y);
 
-            scene.fillPixel(y + pos.x(), x + pos.y());		// 7 октант
-            scene.fillPixel(-y + pos.x(), x + pos.y());		// 6 октант
-            scene.fillPixel(y + pos.x(), -x + pos.y());		// 2 октант
-            scene.fillPixel(-y + pos.x(), -x + pos.y());	// 3 октант
+            scene.fillPixel(x0 + y, y0 + x);
+            scene.fillPixel(x0 + y, y0 - x);
+            scene.fillPixel(x0 - y, y0 + x);
+            scene.fillPixel(x0 - y, y0 - x);
 
-            if (F > 0) {
-                F += dFd;
-                x++;
-                y++;
-                dFs += 2;
-                dFd += 4;
+            error = 2 * (delta + y) - 1;
+            if(delta < 0 && error <= 0) {
+                ++x;
+                delta += 2 * x + 1;
+                continue;
             }
-            else {
-                F += dFs;
-                y++;
-                dFs += 2;
-                dFd += 2;
+            error = 2 * (delta - x) - 1;
+            if(delta > 0 && error > 0) {
+                --y;
+                delta += 1 - 2 * y;
+                continue;
             }
+            ++x;
+            delta += 2 * (x - y);
+            --y;
         }
     }
 

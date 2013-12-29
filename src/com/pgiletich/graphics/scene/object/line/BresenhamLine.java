@@ -53,7 +53,5 @@ public class BresenhamLine extends AbstractLine {
                 }
             }
         }
-
     }
-
 }
